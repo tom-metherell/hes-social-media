@@ -1,0 +1,238 @@
+---
+title: "Multiple imputation convergence"
+author: "Thomas E. Metherell"
+format: 
+  html:
+    fig-format: svg
+toc: true
+---
+
+## Dependencies
+
+```{r dependencies}
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(smcfcs)
+library(targets)
+library(tidyr)
+
+datalist <- tribble(
+  ~id, ~name,
+  "sm1", "Social media use (period 1)",
+  "sm2", "Social media use (period 2)",
+  "NCem1", "Number of employees at primary responding parent's place of work (period 1)",
+  "NCem2", "Number of employees at primary responding parent's place of work (period 2)",
+  "NCcd1", "Attitude towards copying/downloading music etc. (period 1)",
+  "NCcd2", "Attitude towards copying/downloading music etc. (period 2)",
+  "CXsl1", "Sleep (period 1)",
+  "CXsl2", "Sleep (period 2)",
+  "CXex1", "Exercise (period 1)",
+  "CXex2", "Exercise (period 2)",
+  "CXsi1", "In-person social interaction (period 1)",
+  "CXsi2", "In-person social interaction (period 2)",
+  "PCtd1", "SDQ Total Difficulties score (period 1)",
+  "PCtd2", "SDQ Total Difficulties score (period 2)"
+)
+
+cat_datalist <- tribble(
+  ~id, ~name,
+  "sm1", "Period 1",
+  "sm2", "Period 2"
+)
+
+catXh_datalist <- tribble(
+  ~id, ~name,
+  "sm2", "Period 2"
+)
+
+interax_datalist <- tribble(
+  ~id, ~name,
+  "sm1_sex", "Sex (period 1)",
+  "sm1_eth", "Ethnicity (period 1)",
+  "sm1_inc", "Income (period 1)",
+  "sm1_mh", "Prior mental health (period 1)",
+  "sm2_sex", "Sex (period 2)",
+  "sm2_eth", "Ethnicity (period 2)",
+  "sm2_inc", "Income (period 2)",
+  "sm2_wlt", "Wealth (period 2)",
+  "sm2_mh", "Prior mental health (period 2)"
+)
+
+cat_interax_datalist <- tribble(
+  ~id, ~name,
+  "sm1_sex", "Sex (period 1)",
+  "sm1_inc", "Income (period 1)",
+  "sm1_mh", "Prior mental health (period 1)",
+  "sm2_sex", "Sex (period 2)",
+  "sm2_inc", "Income (period 2)",
+  "sm2_wlt", "Wealth (period 2)",
+  "sm2_mh", "Prior mental health (period 2)"
+)
+
+# The below are hotfixes for a bug in smcfcs' plotting function. These will be patched in an upcoming release
+get_coef_names <- function (smformula, dat, intercept) 
+{
+  rhs <- gsub(x = smformula, pattern = ".*~", replacement = "")
+  smformula_matrix <- as.formula(paste0("~ +", rhs))
+  if (grepl(x = rhs, pattern = "strata")) {
+    strata_var <- gsub(x = rhs, pattern = ".*\\(|\\).*", 
+      replacement = "")
+    rm_strata <- as.formula(paste0("~ . - strata(", strata_var, 
+      ")"))
+    smformula_matrix <- update(smformula_matrix, rm_strata)
+  }
+  model_mat <- stats::model.matrix(object = smformula_matrix, 
+    data = dat)
+  if (intercept == FALSE) {
+    model_mat <- model_mat[, !(colnames(model_mat) %in% 
+      "(Intercept)")]
+  }
+  coef_names <- colnames(model_mat)
+  return(coef_names)
+}
+
+prep_iters <- function (x) 
+{
+  M <- dim(x$smCoefIter)[1]
+  smtype <- x$smInfo$smtype
+  smformula <- if(inherits(x$smInfo$smformula, "formula")) deparse1(x$smInfo$smformula) else x$smInfo$smformula
+  dat <- x$impDatasets[[1]]
+  numit <- dim(x$smCoefIter)[3]
+  if (numit < 2) {
+    stop("Re-run smcfcs() with numit >= 2 in order to assess convergence")
+  }
+  coef_names <- get_coef_names(smformula, dat, intercept = FALSE)
+  ests_list <- lapply(X = seq_len(M), function(m) {
+    coef_dat <- as.data.frame(t(x$smCoefIter[m, , ]))
+    coef_dat$iters <- seq_len(numit)
+    coef_dat$imp <- m
+    return(coef_dat)
+  })
+  ests_df <- do.call(rbind.data.frame, ests_list)
+  colnames(ests_df) <- c(coef_names, "iters", "imp")
+  ests_long <- stats::reshape(data = ests_df, varying = coef_names, 
+    timevar = "covar", v.names = "value", idvar = c("imp", 
+      "iters"), direction = "long", times = coef_names)
+  return(ests_long)
+}
+
+plot_mi <- function(id, name, type){
+  cat(paste("###", name, "\n"))
+  
+  if(type == "main"){
+    imputed_data <- tar_read_raw(paste("data_imputed_list", id, sep = "_"))
+  } else {
+    imputed_data <- tar_read_raw(paste(type, "data_imputed_list", id, sep = "_"))
+  }
+  
+  dfs_plot <- lapply(imputed_data, function(x) prep_iters(x))
+  for(i in seq_along(1:length(dfs_plot))){
+    dfs_plot[[i]] <- dfs_plot[[i]] %>%
+      mutate(imp = imp + 3*(i-1))
+  }
+  df_plot <- reduce(dfs_plot, rbind)
+  
+  print(ggplot(data = df_plot, aes(x = .data$iters, y = .data$value, col = factor(.data$imp))) +
+    geom_line() +
+    theme(legend.position = "none") + 
+    labs(x = "Iterations", y = "Coefficient") + 
+    facet_wrap(~covar))
+  
+  cat("\n\n")
+}
+```
+
+## Convergence plots (main analyses)
+Below are the plots used to assess convergence of the multiple imputation for each exposure.
+
+```{r plots}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(datalist))){
+  plot_mi(datalist$id[i], datalist$name[i], "main")
+}
+```
+
+## Convergence plots (sensitivity analyses)
+Below are the plots used to assess convergence of the multiple imputation for each exposure's sensitivity analyses.
+
+```{r plots_sens}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(datalist))){
+  plot_mi(datalist$id[i], datalist$name[i], "sens")
+}
+```
+
+## Convergence plots (categorical social media use)
+Below are the plots used to assess convergence of the multiple imputation for the data with categorised social media use variables.
+
+```{r plots_cat}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(cat_datalist))){
+  plot_mi(cat_datalist$id[i], cat_datalist$name[i], "cat")
+}
+```
+
+### Alternative "high" use thresholds for period 2
+#### 1 hour
+
+```{r plots_cat1h}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(catXh_datalist))){
+  plot_mi(catXh_datalist$id[i], catXh_datalist$name[i], "cat1h")
+}
+```
+
+#### 3 hours
+
+```{r plots_cat3h}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(catXh_datalist))){
+  plot_mi(catXh_datalist$id[i], catXh_datalist$name[i], "cat3h")
+}
+```
+
+#### 4 hours
+
+```{r plots_cat4h}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(catXh_datalist))){
+  plot_mi(catXh_datalist$id[i], catXh_datalist$name[i], "cat4h")
+}
+```
+
+## Convergence plots (interactions)
+Below are the plots used to assess convergence of the multiple imputation for analyses with interaction terms.
+
+```{r plots_interax}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(interax_datalist))){
+  plot_mi(interax_datalist$id[i], interax_datalist$name[i], "interax")
+}
+```
+
+## Convergence plots (interactions, categorised social media use)
+Below are the plots used to assess convergence of the multiple imputation for analyses with interaction terms and categorised social media use.
+
+```{r plots_cat_interax}
+#| echo: false
+#| output: asis
+
+for(i in seq_along(1:nrow(cat_interax_datalist))){
+  plot_mi(cat_interax_datalist$id[i], cat_interax_datalist$name[i], "cat_interax")
+}
+```

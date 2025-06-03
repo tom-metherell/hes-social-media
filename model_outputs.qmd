@@ -1,0 +1,414 @@
+---
+title: "Model outputs"
+author: "Thomas E. Metherell"
+format: html
+toc: true
+toc-depth: 5
+---
+
+## Dependencies
+
+```{r dependencies}
+library(dplyr)
+library(ggforce)
+library(ggplot2)
+library(knitr)
+library(RColorBrewer)
+library(targets)
+library(tidyr)
+
+datalist <- tribble(
+  ~type, ~id, ~name, ~vars_of_interest,
+  "Primary exposure", "sm1", "Social media use (period 1)", "ECQ09X00",
+  "Primary exposure", "sm2", "Social media use (period 2)", "mcs6_sm_per_day",
+  "Negative controls", "NCem1", "Number of employees at primary responding parent's place of work (period 1)", "EPEMPN00",
+  "Negative controls", "NCem2", "Number of employees at primary responding parent's place of work (period 2)", "FPEMPN00",
+  "Negative controls", "NCcd1", "Attitude towards copying/downloading music etc. (period 1)", c("ECQ52X002", "ECQ52X003"),
+  "Negative controls", "NCcd2", "Attitude towards copying/downloading music etc. (period 2)", c("FCCOPY002", "FCCOPY003"),
+  "Competing exposures", "CXsl1", "Sleep (period 1)", "EPBERE001",
+  "Competing exposures", "CXsl2", "Sleep (period 2)", "mcs6_sleep",
+  "Competing exposures", "CXex1", "Exercise (period 1)", "mcs5_exercise",
+  "Competing exposures", "CXex2", "Exercise (period 2)", "FCPHEX00",
+  "Competing exposures", "CXsi1", "In-person social interaction (period 1)", "mcs5_social_interaction",
+  "Competing exposures", "CXsi2", "In-person social interaction (period 2)", "mcs6_social_interaction",
+  "Positive control", "PCtd1", "SDQ Total Difficulties score (period 1)", "EEBDTO_T",
+  "Positive control", "PCtd2", "SDQ Total Difficulties score (period 2)", "FEBDTOT"
+)
+
+adj_datalist <- tribble(
+  ~period, ~id, ~name, ~vars_of_interest,
+  1, "sm1_none", "Unadjusted", "ECQ09X00",
+  1, "sm1_mh", "Adjusted for cohort member's mental health only", "ECQ09X00",
+  1, "sm1_nonmh", "Adjusted for covariates except cohort member's mental health", "ECQ09X00",
+  2, "sm2_none", "Unadjusted", "mcs6_sm_per_day",
+  2, "sm2_mh", "Adjusted for cohort member's mental health only", "mcs6_sm_per_day",
+  2, "sm2_nonmh", "Adjusted for covariates except cohort member's mental health", "mcs6_sm_per_day"
+)
+
+# Some coefficients intentionally suppressed to prevent disclosure
+cat_adj_datalist <- tribble(
+  ~period, ~id, ~name, ~vars_of_interest,
+  1, "sm1_none", "Unadjusted", c("ECQ09X001", "ECQ09X003"),
+  1, "sm1_mh", "Adjusted for cohort member's mental health only", c("ECQ09X001", "ECQ09X003"),
+  1, "sm1_nonmh", "Adjusted for covariates except cohort member's mental health", c("ECQ09X001", "ECQ09X003"),
+  2, "sm2_none", "Unadjusted", "mcs6_sm_per_day1",
+  2, "sm2_mh", "Adjusted for cohort member's mental health only", "mcs6_sm_per_day1",
+  2, "sm2_nonmh", "Adjusted for covariates except cohort member's mental health", "mcs6_sm_per_day1"
+)
+
+# Some coefficients intentionally suppressed to prevent disclosure
+cat_datalist <- tribble(
+  ~id, ~name, ~vars_of_interest,
+  "sm1", "Period 1", c("ECQ09X001", "ECQ09X003"),
+  "sm2", "Period 2", "mcs6_sm_per_day1",
+)
+
+interax_datalist <- tribble(
+  ~period, ~id, ~name, ~vars_of_interest,
+  1, "sm1_sex", "Sex", c("ECQ09X00", "AHCSEX00Female", "ECQ09X00:AHCSEX00Female"),
+  1, "sm1_eth", "Ethnicity", c("ECQ09X00", "DDC06E00Ethnic minority", "ECQ09X00:DDC06E00Ethnic minority"),
+  1, "sm1_inc", "Income", c("ECQ09X00", "DDOEDE00", "ECQ09X00:DDOEDE00"),
+  1, "sm1_mh", "Prior mental health", c("ECQ09X00", "DDDEBDTOT", "ECQ09X00:DDDEBDTOT"),
+  2, "sm2_sex", "Sex", c("mcs6_sm_per_day", "AHCSEX00Female", "mcs6_sm_per_day:AHCSEX00Female"),
+  2, "sm2_eth", "Ethnicity", c("mcs6_sm_per_day", "DDC06E00Ethnic minority", "mcs6_sm_per_day:DDC06E00Ethnic minority"),
+  2, "sm2_inc", "Income", c("mcs6_sm_per_day", "EOEDE000", "mcs6_sm_per_day:EOEDE000"),
+  2, "sm2_wlt", "Wealth", c("mcs6_sm_per_day", "mcs5_wealth", "mcs6_sm_per_day:mcs5_wealth"),
+  2, "sm2_mh", "Prior mental health", c("mcs6_sm_per_day", "EEBDTO_T", "mcs6_sm_per_day:EEBDTO_T")
+)
+
+# Some coefficients intentionally suppressed to prevent disclosure
+cat_interax_datalist <- tribble(
+  ~period, ~id, ~name, ~vars_of_interest,
+  1, "sm1_sex", "Sex", c("ECQ09X001", "ECQ09X003", "AHCSEX00Female"),
+  1, "sm1_inc", "Income", c("ECQ09X001", "ECQ09X003", "DDOEDE00", "ECQ09X001:DDOEDE00", "ECQ09X003:DDOEDE00"),
+  1, "sm1_mh", "Prior mental health", c("ECQ09X001", "ECQ09X003", "DDDEBDTOT", "ECQ09X001:DDDEBDTOT", "ECQ09X003:DDDEBDTOT"),
+  2, "sm2_sex", "Sex", c("mcs6_sm_per_day1", "AHCSEX00Female"),
+  2, "sm2_inc", "Income", c("mcs6_sm_per_day1", "EOEDE000", "mcs6_sm_per_day1:EOEDE000"),
+  2, "sm2_wlt", "Wealth", c("mcs6_sm_per_day1", "mcs5_wealth", "mcs6_sm_per_day1:mcs5_wealth"),
+  2, "sm2_mh", "Prior mental health", c("mcs6_sm_per_day1", "EEBDTO_T", "mcs6_sm_per_day1:EEBDTO_T")
+)
+
+format_table <- function(results, vars_of_interest){
+  f <- file()
+  sink(file = f)
+  results_table <- summary(results)
+  sink()
+  close(f)
+  results_table$`p-value` <- 2*pt(-abs(results_table$results / results_table$se), results$df)
+  suppressWarnings({
+    results_table <- results_table %>%
+     mutate(
+        `E-value` = case_when(
+          `(lower` <= 0 & `upper)` >= 0 ~ 1,
+          `(lower` > 0 ~ exp(`(lower`) + sqrt(exp(`(lower`) * (exp(`(lower`) - 1)),
+          `upper)` < 0 ~ 1/exp(`upper)`) + sqrt(1/exp(`upper)`) * (1/exp(`upper)`) - 1))
+        ),
+        results = exp(results),
+        `(lower` = exp(`(lower`),
+        `upper)` = exp(`upper)`),
+        `p-value` = `p-value`
+      ) %>%
+      select(-se, -missInfo) %>%
+      rename(
+        HR = results,
+        lower = `(lower`,
+        upper = `upper)`
+      )
+  })
+  
+  return(results_table[vars_of_interest[[1]], ])
+}
+```
+
+## Results
+Below the outputs from the main analysis models, unweighted and weighted, are shown.
+
+```{r results}
+#| echo: false
+#| results: asis
+
+for(i in seq_along(1:length(unique(datalist$type)))){
+  cat(paste("###", unique(datalist$type)[i]))
+  for(j in seq_along(1:nrow(datalist[datalist$type == unique(datalist$type)[i],]))){
+    id <- datalist[datalist$type == unique(datalist$type)[i],]$id[j]
+    vars_of_interest <- datalist[datalist$type == unique(datalist$type)[i],]$vars_of_interest[j]
+    cat(paste("\n\n####", datalist[datalist$type == unique(datalist$type)[i],]$name[j]))
+    cat("\n\n##### Unweighted\n\n")
+    print(format_table(tar_read_raw(paste("unweighted_model_summary", id, sep = "_")), vars_of_interest) |> kable(digits = 3))
+    cat("\n\n##### Weighted\n\n")
+    print(format_table(tar_read_raw(paste("weighted_model_summary", id, sep = "_")), vars_of_interest) |> kable(digits = 3))
+    cat("\n\n")
+  }
+}
+```
+
+### Plots
+#### Period 1
+
+```{r plot_1}
+#| echo: false
+#| results: asis
+
+terms <- c(
+  "Social media use",
+  "Number of employees at parent's workplace",
+  "Attitude to pirating (a bit wrong)",
+  "Attitude to pirating (not wrong)",
+  "Sleep",
+  "Exercise",
+  "In-person social interaction",
+  "SDQ Total Difficulties score"
+)
+
+plot_data <- data.frame(
+  period = c(rep(1, 8), rep(2, 8)),
+  term = rep(terms, 2),
+  Type = rep(c("Main", rep("Negative control", 3), rep("Competing exposure", 3), "Positive control"), 2),
+  coef = rep(NA, 16),
+  var = rep(NA, 16),
+  df = rep(NA, 16)
+)
+
+plot_data$Type <- factor(plot_data$Type, ordered = TRUE, levels = c("Main", "Negative control", "Competing exposure", "Positive control"))
+
+plot_data$coef[1] <- tar_read(weighted_model_summary_sm1)$coefficients["ECQ09X00"]
+plot_data$coef[2] <- tar_read(weighted_model_summary_NCem1)$coefficients["EPEMPN00"]
+plot_data$coef[3] <- tar_read(weighted_model_summary_NCcd1)$coefficients["ECQ52X002"]
+plot_data$coef[4] <- tar_read(weighted_model_summary_NCcd1)$coefficients["ECQ52X003"]
+plot_data$coef[5] <- tar_read(weighted_model_summary_CXsl1)$coefficients["EPBERE001"]
+plot_data$coef[6] <- tar_read(weighted_model_summary_CXex1)$coefficients["mcs5_exercise"]
+plot_data$coef[7] <- tar_read(weighted_model_summary_CXsi1)$coefficients["mcs5_social_interaction"]
+plot_data$coef[8] <- tar_read(weighted_model_summary_PCtd1)$coefficients["EEBDTO_T"]
+plot_data$coef[9] <- tar_read(weighted_model_summary_sm2)$coefficients["mcs6_sm_per_day"]
+plot_data$coef[10] <- tar_read(weighted_model_summary_NCem2)$coefficients["FPEMPN00"]
+plot_data$coef[11] <- tar_read(weighted_model_summary_NCcd2)$coefficients["FCCOPY002"]
+plot_data$coef[12] <- tar_read(weighted_model_summary_NCcd2)$coefficients["FCCOPY003"]
+plot_data$coef[13] <- tar_read(weighted_model_summary_CXsl2)$coefficients["mcs6_sleep"]
+plot_data$coef[14] <- tar_read(weighted_model_summary_CXex2)$coefficients["FCPHEX00"]
+plot_data$coef[15] <- tar_read(weighted_model_summary_CXsi2)$coefficients["mcs6_social_interaction"]
+plot_data$coef[16] <- tar_read(weighted_model_summary_PCtd2)$coefficients["FEBDTOT"]
+
+plot_data$var[1] <- tar_read(weighted_model_summary_sm1)$variance["ECQ09X00", "ECQ09X00"]
+plot_data$var[2] <- tar_read(weighted_model_summary_NCem1)$variance["EPEMPN00", "EPEMPN00"]
+plot_data$var[3] <- tar_read(weighted_model_summary_NCcd1)$variance["ECQ52X002", "ECQ52X002"]
+plot_data$var[4] <- tar_read(weighted_model_summary_NCcd1)$variance["ECQ52X003", "ECQ52X003"]
+plot_data$var[5] <- tar_read(weighted_model_summary_CXsl1)$variance["EPBERE001", "EPBERE001"]
+plot_data$var[6] <- tar_read(weighted_model_summary_CXex1)$variance["mcs5_exercise", "mcs5_exercise"]
+plot_data$var[7] <- tar_read(weighted_model_summary_CXsi1)$variance["mcs5_social_interaction", "mcs5_social_interaction"]
+plot_data$var[8] <- tar_read(weighted_model_summary_PCtd1)$variance["EEBDTO_T", "EEBDTO_T"]
+plot_data$var[9] <- tar_read(weighted_model_summary_sm2)$variance["mcs6_sm_per_day", "mcs6_sm_per_day"]
+plot_data$var[10] <- tar_read(weighted_model_summary_NCem2)$variance["FPEMPN00", "FPEMPN00"]
+plot_data$var[11] <- tar_read(weighted_model_summary_NCcd2)$variance["FCCOPY002", "FCCOPY002"]
+plot_data$var[12] <- tar_read(weighted_model_summary_NCcd2)$variance["FCCOPY003", "FCCOPY003"]
+plot_data$var[13] <- tar_read(weighted_model_summary_CXsl2)$variance["mcs6_sleep", "mcs6_sleep"]
+plot_data$var[14] <- tar_read(weighted_model_summary_CXex2)$variance["FCPHEX00", "FCPHEX00"]
+plot_data$var[15] <- tar_read(weighted_model_summary_CXsi2)$variance["mcs6_social_interaction", "mcs6_social_interaction"]
+plot_data$var[16] <- tar_read(weighted_model_summary_PCtd2)$variance["FEBDTOT", "FEBDTOT"]
+
+plot_data$df[1] <- tar_read(weighted_model_summary_sm1)$df["ECQ09X00"]
+plot_data$df[2] <- tar_read(weighted_model_summary_NCem1)$df["EPEMPN00"]
+plot_data$df[3] <- tar_read(weighted_model_summary_NCcd1)$df["ECQ52X002"]
+plot_data$df[4] <- tar_read(weighted_model_summary_NCcd1)$df["ECQ52X003"]
+plot_data$df[5] <- tar_read(weighted_model_summary_CXsl1)$df["EPBERE001"]
+plot_data$df[6] <- tar_read(weighted_model_summary_CXex1)$df["mcs5_exercise"]
+plot_data$df[7] <- tar_read(weighted_model_summary_CXsi1)$df["mcs5_social_interaction"]
+plot_data$df[8] <- tar_read(weighted_model_summary_PCtd1)$df["EEBDTO_T"]
+plot_data$df[9] <- tar_read(weighted_model_summary_sm2)$df["mcs6_sm_per_day"]
+plot_data$df[10] <- tar_read(weighted_model_summary_NCem2)$df["FPEMPN00"]
+plot_data$df[11] <- tar_read(weighted_model_summary_NCcd2)$df["FCCOPY002"]
+plot_data$df[12] <- tar_read(weighted_model_summary_NCcd2)$df["FCCOPY003"]
+plot_data$df[13] <- tar_read(weighted_model_summary_CXsl2)$df["mcs6_sleep"]
+plot_data$df[14] <- tar_read(weighted_model_summary_CXex2)$df["FCPHEX00"]
+plot_data$df[15] <- tar_read(weighted_model_summary_CXsi2)$df["mcs6_social_interaction"]
+plot_data$df[16] <- tar_read(weighted_model_summary_PCtd2)$df["FEBDTOT"]
+
+plot_data$term <- factor(plot_data$term, levels = rev(plot_data$term[1:8]))
+
+ggplot(plot_data[plot_data$period == 1,], aes(x = exp(coef), xmin = exp(coef - qt(0.975, df)*sqrt(var)), xmax = exp(coef + qt(0.975, df)*sqrt(var)), y = term, fill = Type, colour = Type)) +
+  geom_pointrange() +
+  geom_vline(aes(xintercept = 1), linetype = "dotted") +
+  geom_text(aes(x = 20, hjust = 0, fill = NULL, colour = NULL, label = paste0(format(round(exp(coef), 3), nsmall = 3), " (", format(round(exp(coef - qt(0.975, df)*sqrt(var)), 3), nsmall = 3), ", ", format(round(exp(coef + qt(0.975, df)*sqrt(var)), 3), nsmall = 3), ")")), size = 2.4, show.legend = FALSE) +
+  labs(x = "HR", y = "Exposure") +
+  scale_x_log10(limits = c(0.38, 100)) +
+  scale_colour_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal() +
+  theme(text = element_text(size = 20/3))
+
+ggsave("plots/fig2.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+```
+
+#### Period 2
+
+```{r plot_2}
+#| echo: false
+#| results: asis
+
+ggplot(plot_data[plot_data$period == 2,], aes(x = exp(coef), xmin = exp(coef - qt(0.975, df)*sqrt(var)), xmax = exp(coef + qt(0.975, df)*sqrt(var)), y = term, fill = Type, colour = Type)) +
+  geom_pointrange() +
+  geom_vline(aes(xintercept = 1), linetype = "dotted") +
+  geom_text(aes(x = 3, hjust = 0, fill = NULL, colour = NULL, label = paste0(format(round(exp(coef), 3), nsmall = 3), " (", format(round(exp(coef - qt(0.975, df)*sqrt(var)), 3), nsmall = 3), ", ", format(round(exp(coef + qt(0.975, df)*sqrt(var)), 3), nsmall = 3), ")")), size = 2.4, show.legend = FALSE) +
+  labs(x = "HR", y = "Exposure") +
+  scale_x_log10(limits = c(0.48, 6)) + 
+  scale_colour_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal() +
+  theme(text = element_text(size = 20/3))
+
+ggsave("plots/fig3.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+```
+
+## Sensitivity analyses
+Below the outputs from the sensitivity analysis models, unweighted and weighted, are shown.
+
+```{r sens}
+#| echo: false
+#| results: asis
+
+for(i in seq_along(1:length(unique(datalist$type)))){
+  cat(paste("###", unique(datalist$type)[i]))
+  for(j in seq_along(1:nrow(datalist[datalist$type == unique(datalist$type)[i],]))){
+    id <- datalist[datalist$type == unique(datalist$type)[i],]$id[j]
+    vars_of_interest <- datalist[datalist$type == unique(datalist$type)[i],]$vars_of_interest[j]
+    cat(paste("\n\n####", datalist[datalist$type == unique(datalist$type)[i],]$name[j]))
+    cat("\n\n##### Unweighted\n\n")
+    print(format_table(tar_read_raw(paste("sens_unweighted_model_summary", id, sep = "_")), vars_of_interest) |> kable(digits = 3))
+    cat("\n\n##### Weighted\n\n")
+    print(format_table(tar_read_raw(paste("sens_weighted_model_summary", id, sep = "_")), vars_of_interest) |> kable(digits = 3))
+    cat("\n\n")
+  }
+}
+```
+
+## Differential adjustment
+Below the outputs from the unadjusted and partially adjusted models (weighted only) are shown.
+
+```{r adj}
+#| echo: false
+#| results: asis
+
+for(i in seq_along(1:length(unique(adj_datalist$period)))){
+  cat(paste("### Period", unique(adj_datalist$period)[i]))
+  for(j in seq_along(1:nrow(adj_datalist[adj_datalist$period == unique(adj_datalist$period)[i],]))){
+    cat(paste("\n\n####", adj_datalist[adj_datalist$period == unique(adj_datalist$period)[i],]$name[j]))
+    print(format_table(tar_read_raw(paste("adj_weighted_model_summary", adj_datalist[adj_datalist$period == unique(adj_datalist$period)[i],]$id[j], sep = "_")), adj_datalist[adj_datalist$period == unique(adj_datalist$period)[i],]$vars_of_interest[j]) |> kable(digits = 3))
+    cat("\n\n")
+  }
+}
+```
+
+## Categorised social media use
+Below the outputs from the models with social media use variables categorised (weighted only) are shown. For period 2, a threshold for "high" social media use of 2 hours is used. Results using other thresholds, as well as the estimates for the high social media use group, are suppressed to prevent disclosure.
+
+```{r cat}
+#| echo: false
+#| results: asis
+
+for(i in seq_along(1:length(cat_datalist$id))){
+  cat(paste("###", cat_datalist$name[i]))
+  print(format_table(tar_read_raw(paste("cat_weighted_model_summary", cat_datalist$id[i], sep = "_")), cat_datalist$vars_of_interest[i]) |> kable(digits = 3))
+  cat("\n\n")
+}
+```
+
+#### 1-hour threshold
+
+Suppressed to prevent disclosure.
+
+#### 3-hour threshold
+
+Suppressed to prevent disclosure.
+
+#### 4-hour threshold
+
+Suppressed to prevent disclosure.
+
+### Plot
+
+```{r plots_3}
+#| echo: false
+#| results: asis
+
+plot_data2 <- data.frame(
+  period = c("Period 1 (age 11–14)", "Period 1 (age 11–14)", "Period 2 (age 14–17)"),
+  usage = c("Never", "Most days", "None"),
+  coef = rep(NA, 3),
+  var = rep(NA, 3),
+  df = rep(NA, 3)
+)
+
+plot_data2$coef[1] <- tar_read(cat_weighted_model_summary_sm1)$coefficients["ECQ09X001"]
+plot_data2$coef[2] <- tar_read(cat_weighted_model_summary_sm1)$coefficients["ECQ09X003"]
+plot_data2$coef[3] <- tar_read(cat_weighted_model_summary_sm2)$coefficients["mcs6_sm_per_day1"]
+
+plot_data2$var[1] <- tar_read(cat_weighted_model_summary_sm1)$variance["ECQ09X001", "ECQ09X001"]
+plot_data2$var[2] <- tar_read(cat_weighted_model_summary_sm1)$variance["ECQ09X003", "ECQ09X003"]
+plot_data2$var[3] <- tar_read(cat_weighted_model_summary_sm2)$variance["mcs6_sm_per_day1", "mcs6_sm_per_day1"]
+
+plot_data2$df[1] <- tar_read(cat_weighted_model_summary_sm1)$df["ECQ09X001"]
+plot_data2$df[2] <- tar_read(cat_weighted_model_summary_sm1)$df["ECQ09X003"]
+plot_data2$df[3] <- tar_read(cat_weighted_model_summary_sm2)$df["mcs6_sm_per_day1"]
+
+ggplot(plot_data2, aes(x = exp(coef), xmin = exp(coef - qt(0.975, df)*sqrt(var)), xmax = exp(coef + qt(0.975, df)*sqrt(var)), y = usage)) +
+  geom_pointrange() +
+  geom_vline(aes(xintercept = 1), linetype = "dotted") +
+  geom_text(aes(x = 10, hjust = 0, label = paste0(format(round(exp(coef), 3), nsmall = 3), " (", format(round(exp(coef - qt(0.975, df)*sqrt(var)), 3), nsmall = 3), ", ", format(round(exp(coef + qt(0.975, df)*sqrt(var)), 3), nsmall = 3), ")")), size = 3.6, show.legend = FALSE) +
+  labs(x = "HR", y = "Usage") +
+  scale_x_log10(limits = c(0.3, 30)) +
+  theme_minimal() +
+  theme(text = element_text(size = 10)) +
+  facet_col(facets = vars(period), scales = "free_y", space = "free")
+
+ggsave("plots/fig4.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+```
+
+## Differential adjustment (categorised social media use)
+Below the outputs from the unadjusted and partially adjusted models using categorised social media use variables (weighted only, 2-hour threshold only) are shown.
+
+```{r cat_adj}
+#| echo: false
+#| results: asis
+
+for(i in seq_along(1:length(unique(adj_datalist$period)))){
+  cat(paste("### Period", unique(adj_datalist$period)[i]))
+  for(j in seq_along(1:nrow(adj_datalist[adj_datalist$period == unique(adj_datalist$period)[i],]))){
+    cat(paste("\n\n####", adj_datalist[adj_datalist$period == unique(adj_datalist$period)[i],]$name[j]))
+    print(format_table(tar_read_raw(paste("cat_adj_weighted_model_summary", cat_adj_datalist[cat_adj_datalist$period == unique(cat_adj_datalist$period)[i],]$id[j], sep = "_")), cat_adj_datalist[cat_adj_datalist$period == unique(cat_adj_datalist$period)[i],]$vars_of_interest[j]) |> kable(digits = 3))
+    cat("\n\n")
+  }
+}
+```
+
+## Interaction models
+Below the outputs from the models including interaction terms (weighted only) are shown.
+
+```{r interax}
+#| echo: false
+#| results: asis
+
+for(i in seq_along(1:length(unique(interax_datalist$period)))){
+  cat(paste("### Period", unique(interax_datalist$period)[i]))
+  for(j in seq_along(1:nrow(interax_datalist[interax_datalist$period == unique(interax_datalist$period)[i],]))){
+    cat(paste("\n\n####", interax_datalist[interax_datalist$period == unique(interax_datalist$period)[i],]$name[j]))
+    print(format_table(tar_read_raw(paste("interax_weighted_model_summary", interax_datalist[interax_datalist$period == unique(interax_datalist$period)[i],]$id[j], sep = "_")), interax_datalist[interax_datalist$period == unique(interax_datalist$period)[i],]$vars_of_interest[j]) |> kable(digits = 3))
+    cat("\n\n")
+  }
+}
+```
+
+## Interaction models (categorised social media use)
+Below the outputs from the models including interaction terms and with categorised social media use (2-hour threshold only for period 2) are shown (weighted only). Some coefficients are suppressed to prevent disclosure.
+
+```{r cat_interax}
+#| echo: false
+#| results: asis
+
+for(i in seq_along(1:length(unique(cat_interax_datalist$period)))){
+  cat(paste("### Period", unique(cat_interax_datalist$period)[i]))
+  for(j in seq_along(1:nrow(cat_interax_datalist[cat_interax_datalist$period == unique(cat_interax_datalist$period)[i],]))){
+    cat(paste("\n\n####", cat_interax_datalist[cat_interax_datalist$period == unique(cat_interax_datalist$period)[i],]$name[j]))
+    print(format_table(tar_read_raw(paste("cat_interax_weighted_model_summary", cat_interax_datalist[cat_interax_datalist$period == unique(cat_interax_datalist$period)[i],]$id[j], sep = "_")), cat_interax_datalist[cat_interax_datalist$period == unique(cat_interax_datalist$period)[i],]$vars_of_interest[j]) |> kable(digits = 3))
+    cat("\n\n")
+  }
+}
+```

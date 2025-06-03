@@ -1,0 +1,259 @@
+---
+title: "Descriptives report"
+author: "Thomas E. Metherell"
+format: 
+  html:
+    fig-format: svg
+toc: true
+toc-depth: 4
+---
+
+## Dependencies
+
+```{r dependencies}
+library(dplyr)
+library(ggplot2)
+library(haven)
+library(knitr)
+library(targets)
+
+data <- tar_read(descriptive_dataset)
+
+# Recoding ethnicity to make easier to read
+data$DDC06E00 <- recode(data$DDC06E00, `0` = "White", `1` = "Ethnic minority")
+```
+
+## Social media use
+### Age 11
+
+The number of participants with non-missing social media use data at age 11 is `r sum(!is.na(data$ECQ09X00))`.
+
+```{r smu_1}
+data_smu1_plot <- data
+
+data_smu1_plot <- data_smu1_plot %>%
+  select(MCSID, CNUM, ECQ09X00) %>%
+  filter(!is.na(ECQ09X00)) %>%
+  mutate(ECQ09X00 = case_match(ECQ09X00,
+    1 ~ "Never",
+    2 ~ "Less often than once a month",
+    3 ~ "At least once a month",
+    4 ~ "At least once a week",
+    5 ~ "Most days"
+  ))
+
+data_smu1_plot$ECQ09X00 <- factor(data_smu1_plot$ECQ09X00, ordered = TRUE, levels = c("Never", "Less often than once a month", "At least once a month", "At least once a week", "Most days"))
+
+ggplot(data_smu1_plot, aes(x = ECQ09X00)) +
+  geom_bar() +
+  labs(x = "Social media use frequency (age 11)", y = "Number of participants") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+#### Numbers in categories of usage
+##### Cross-tabulated with categorical interaction variables
+
+```{r smu1_cat}
+data_smu1_cat <- data %>% mutate(ECQ09X00 = case_when(
+  ECQ09X00 == 1 ~ "Never",
+  ECQ09X00 %in% c(2, 3, 4) ~ "Less often than most days",
+  ECQ09X00 == 5 ~ "Most days"
+))
+
+data_smu1_cat$ECQ09X00 <- factor(data_smu1_cat$ECQ09X00, ordered = TRUE, levels = c("Never", "Less often than most days", "Most days"))
+```
+
+```{r smu1_cat_interax}
+table(data_smu1_cat$ECQ09X00, data_smu1_cat$AHCSEX00, data_smu1_cat$HES_ei1) %>% data.frame() %>% rename(`Social media use frequency` = Var1, `Sex assigned at birth` = Var2, `HES event (period 1)?` = Var3) %>% mutate(Freq = case_match(Freq, 0:9 ~ "<10", .default = as.character(Freq)), Freq = case_when(`Social media use frequency` %in% c("Less often than most days", "Most days") & `Sex assigned at birth` == "Male" & `HES event (period 1)?` == 1 ~ ".", TRUE ~ Freq)) |> kable()
+
+table(data_smu1_cat$ECQ09X00, data_smu1_cat$DDC06E00, data_smu1_cat$HES_ei1) %>% data.frame() %>% rename(`Social media use frequency` = Var1, Ethnicity = Var2, `HES event (period 1)?` = Var3) %>% mutate(Freq = case_match(Freq, 0:9 ~ "<10", .default = as.character(Freq)))|> kable()
+```
+
+#### Characteristics of non-users vs users
+##### Non-users
+
+```{r smu_1_2}
+data_subset_smu1_0 <- filter(data, data$ECQ09X00 == 1)
+
+cat(paste("Income (DDOEDE00):\nMean:", as.character(round(mean(data_subset_smu1_0$DDOEDE00, na.rm = TRUE), 1)), "\nStandard deviation:", as.character(round(sd(data_subset_smu1_0$DDOEDE00, na.rm = TRUE), 1))))
+```
+
+##### Users
+
+```{r smu_1_3}
+data_subset_smu1_1 <- filter(data, data$ECQ09X00 != 1)
+
+cat(paste("Income (DDOEDE00):\nMean:", as.character(round(mean(data_subset_smu1_1$DDOEDE00, na.rm = TRUE), 1)), "\nStandard deviation:", as.character(round(sd(data_subset_smu1_1$DDOEDE00, na.rm = TRUE), 1))))
+```
+
+### Age 14
+
+The number of participants with non-missing social media use data at age 14 is `r sum(!is.na(data$mcs6_sm_per_day))`. The histogram is truncated at 3 hours, 7.5 minutes to prevent disclosure (number of participants with usage between 2 hours, 52.5 minutes and 3 hours, 7.5 minutes = `r sum(data$mcs6_sm_per_day >= 172.5 & data$mcs6_sm_per_day < 187.5 & !is.na(data$mcs6_sm_per_day))`).
+
+```{r smu_2_1}
+ggplot(data[data$mcs6_sm_per_day < 187.5,], aes(x = mcs6_sm_per_day)) +
+  geom_histogram(binwidth = 15) +
+  labs(x = "Social media use time in minutes per day (age 14)", y = "Density") +
+  scale_x_continuous(breaks = seq(0, 180, 30)) +
+  theme_bw()
+```
+
+Percentiles:
+
+```{r smu_2_2}
+smu_2_percentiles <- quantile(data$mcs6_sm_per_day, c(seq(0, 0.9, 0.1), 0.99), na.rm = TRUE) %>% data.frame()
+
+names(smu_2_percentiles) <- "Social media use per day (minutes)"
+
+smu_2_percentiles |> kable()
+```
+
+#### Numbers in categories of usage
+##### Total
+###### 1-hour threshold
+
+```{r smu2_cat1}
+data_smu2_cat1 <- data %>% mutate(mcs6_sm_per_day = case_when(
+  mcs6_sm_per_day == 0 ~ "None",
+  mcs6_sm_per_day > 0 & mcs6_sm_per_day <= 60 ~ "Moderate",
+  mcs6_sm_per_day > 60 ~ "High"
+))
+
+table(data_smu2_cat1$mcs6_sm_per_day) %>% data.frame() %>% rename(`Social media use per day` = Var1) |> kable()
+```
+
+###### 2-hour threshold
+
+```{r smu2_cat2}
+data_smu2_cat2 <- data %>% mutate(mcs6_sm_per_day = case_when(
+  mcs6_sm_per_day == 0 ~ "None",
+  mcs6_sm_per_day > 0 & mcs6_sm_per_day <= 120 ~ "Moderate",
+  mcs6_sm_per_day > 120 ~ "High"
+))
+```
+
+Suppressed to prevent disclosure.
+
+###### 3-hour threshold
+
+```{r smu2_cat3}
+data_smu2_cat3 <- data %>% mutate(mcs6_sm_per_day = case_when(
+  mcs6_sm_per_day == 0 ~ "None",
+  mcs6_sm_per_day > 0 & mcs6_sm_per_day <= 180 ~ "Moderate",
+  mcs6_sm_per_day > 180 ~ "High"
+))
+
+table(data_smu2_cat3$mcs6_sm_per_day) %>% data.frame() %>% rename(`Social media use per day` = Var1) |> kable()
+```
+
+###### 4-hour threshold
+
+```{r smu2_cat4}
+data_smu2_cat4 <- data %>% mutate(mcs6_sm_per_day = case_when(
+  mcs6_sm_per_day == 0 ~ "None",
+  mcs6_sm_per_day > 0 & mcs6_sm_per_day <= 240 ~ "Moderate",
+  mcs6_sm_per_day > 240 ~ "High"
+))
+
+table(data_smu2_cat4$mcs6_sm_per_day) %>% data.frame() %>% rename(`Social media use per day` = Var1) |> kable()
+```
+
+##### Cross-tabulated with categorical interaction variables
+The following are for a 2-hour threshold only.
+
+```{r smu2_cat_interax}
+table(data_smu2_cat2$mcs6_sm_per_day, data_smu2_cat2$AHCSEX00, data_smu2_cat2$HES_ei2) %>% data.frame() %>% rename(`Social media use per day` = Var1, `Sex assigned at birth` = Var2, `HES event (period 2)?` = Var3) %>% mutate(Freq = case_match(Freq, 0:9 ~ "<10", .default = as.character(Freq)), Freq = case_when(`Social media use per day` %in% c("Moderate", "High") & `Sex assigned at birth` == "Female" & `HES event (period 2)?` == 1 ~ ".", TRUE ~ Freq)) |> kable()
+
+table(data_smu2_cat2$mcs6_sm_per_day, data_smu2_cat2$DDC06E00, data_smu2_cat2$HES_ei2) %>% data.frame() %>% rename(`Social media use per day` = Var1, Ethnicity = Var2, `HES event (period 2)?` = Var3) %>% mutate(Freq = case_match(Freq, 0:9 ~ "<10", .default = as.character(Freq))) |> kable()
+```
+
+#### Characteristics of non-users vs users
+##### Non-users
+
+```{r smu_2_3}
+data_subset_smu2_0 <- filter(data, data$mcs6_sm_per_day == 0)
+
+cat(paste("Income (EOEDE000):\nMean:", as.character(round(mean(data_subset_smu2_0$EOEDE000, na.rm = TRUE), 1)), "\nStandard deviation:", as.character(round(sd(data_subset_smu2_0$EOEDE000, na.rm = TRUE), 1))))
+
+cat(paste("Household wealth (mcs5_wealth):\nMean:", as.character(round(mean(data_subset_smu2_0$mcs5_wealth, na.rm = TRUE), 1)), "\nStandard deviation:", as.character(round(sd(data_subset_smu2_0$mcs5_wealth, na.rm = TRUE), 1))))
+```
+
+##### Users
+
+```{r smu_2_4}
+data_subset_smu2_1 <- filter(data, data$mcs6_sm_per_day != 0)
+
+cat(paste("Income (EOEDE000):\nMean:", as.character(round(mean(data_subset_smu2_1$EOEDE000, na.rm = TRUE), 1)), "\nStandard deviation:", as.character(round(sd(data_subset_smu2_1$EOEDE000, na.rm = TRUE), 1))))
+
+cat(paste("Household wealth (mcs5_wealth):\nMean:", as.character(round(mean(data_subset_smu2_1$mcs5_wealth, na.rm = TRUE), 1)), "\nStandard deviation:", as.character(round(sd(data_subset_smu2_1$mcs5_wealth, na.rm = TRUE), 1))))
+```
+
+## HES episodes
+
+The total number of participants with a psychiatric episode recorded in period 1 is `r sum(data$HES_ei1, na.rm = TRUE)`.
+
+The total number of participants with a psychiatric episode recorded in period 2 is `r sum(data$HES_ei2, na.rm = TRUE)`.
+
+### Cross-tabulation
+
+```{r HES_crosstab}
+data_crosstab <- data %>% select(MCSID, CNUM, CONSENT, HES_ei1, HES_ei2)
+
+data_crosstab <- data_crosstab %>% mutate(
+  HES_ei1 = if_else(CONSENT == 0, NA, HES_ei1),
+  HES_ei2 = if_else(CONSENT == 0, NA, HES_ei2)
+)
+
+table(
+  data_crosstab$HES_ei1 %>% case_match(0 ~ "No (period 1)", 1 ~ "Yes (period 1)", .default = NA), 
+  data_crosstab$HES_ei2 %>% case_match(0 ~ "No (period 2)", 1 ~ "Yes (period 2)", .default = NA)
+) |> kable()
+```
+
+In total `r format(sum(data$CONSENT == 0), scientific = FALSE)` eligible participants did not consent to HES linkage.
+
+Note that in the subsequent tables that the totals will not add up to the numbers above because the numbers of participants with missing responses to the grouping variables are not shown.
+
+### By region
+#### Period 1
+
+```{r HES_table_1}
+data_HES1 <- data %>% filter(HES_ei1 == 1)
+
+table((data_HES1 %>% mutate(DAREGN00 = as_factor(DAREGN00)))$DAREGN00) %>% data.frame() %>% rename(`Region of residence` = Var1) %>% mutate(Freq = case_match(Freq, 0:9 ~ "<10", .default = as.character(Freq))) |> kable()
+```
+
+#### Period 2
+
+```{r HES_table_2}
+data_HES2 <- data %>% filter(HES_ei2 == 1)
+
+table((data_HES2 %>% mutate(EAREGN00 = as_factor(EAREGN00)))$EAREGN00) %>% data.frame() %>% rename(`Region of residence` = Var1) %>% mutate(Freq = case_match(Freq, 0:9 ~ "<10", .default = as.character(Freq))) |> kable()
+```
+
+### By sex assigned at birth
+#### Period 1
+
+```{r HES_table_3}
+table(data_HES1$AHCSEX00) %>% data.frame() %>% rename(`Sex assigned at birth` = Var1) |> kable()
+```
+
+#### Period 2
+
+```{r HES_table_4}
+table(data_HES2$AHCSEX00) %>% data.frame() %>% rename(`Sex assigned at birth` = Var1) |> kable()
+```
+
+### By ethnicity
+#### Period 1
+
+```{r HES_table_5}
+table(data_HES1$DDC06E00) %>% data.frame() %>% rename(`Ethnicity` = Var1) |> kable()
+```
+
+#### Period 2
+
+```{r HES_table_6}
+table(data_HES2$DDC06E00) %>% data.frame() %>% rename(`Ethnicity` = Var1) |> kable()
+```

@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Thomas E. Metherell">
+
+<title>Descriptives report</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="descriptives_report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="descriptives_report_files/libs/quarto-html/quarto.js"></script>
+<script src="descriptives_report_files/libs/quarto-html/popper.min.js"></script>
+<script src="descriptives_report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="descriptives_report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="descriptives_report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="descriptives_report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="descriptives_report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="descriptives_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="descriptives_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link active" data-scroll-target="#dependencies">Dependencies</a></li>
+  <li><a href="#social-media-use" id="toc-social-media-use" class="nav-link" data-scroll-target="#social-media-use">Social media use</a>
+  <ul>
+  <li><a href="#age-11" id="toc-age-11" class="nav-link" data-scroll-target="#age-11">Age 11</a>
+  <ul class="collapse">
+  <li><a href="#numbers-in-categories-of-usage" id="toc-numbers-in-categories-of-usage" class="nav-link" data-scroll-target="#numbers-in-categories-of-usage">Numbers in categories of usage</a></li>
+  <li><a href="#characteristics-of-non-users-vs-users" id="toc-characteristics-of-non-users-vs-users" class="nav-link" data-scroll-target="#characteristics-of-non-users-vs-users">Characteristics of non-users vs users</a></li>
+  </ul></li>
+  <li><a href="#age-14" id="toc-age-14" class="nav-link" data-scroll-target="#age-14">Age 14</a>
+  <ul class="collapse">
+  <li><a href="#numbers-in-categories-of-usage-1" id="toc-numbers-in-categories-of-usage-1" class="nav-link" data-scroll-target="#numbers-in-categories-of-usage-1">Numbers in categories of usage</a></li>
+  <li><a href="#characteristics-of-non-users-vs-users-1" id="toc-characteristics-of-non-users-vs-users-1" class="nav-link" data-scroll-target="#characteristics-of-non-users-vs-users-1">Characteristics of non-users vs users</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#hes-episodes" id="toc-hes-episodes" class="nav-link" data-scroll-target="#hes-episodes">HES episodes</a>
+  <ul>
+  <li><a href="#cross-tabulation" id="toc-cross-tabulation" class="nav-link" data-scroll-target="#cross-tabulation">Cross-tabulation</a></li>
+  <li><a href="#by-region" id="toc-by-region" class="nav-link" data-scroll-target="#by-region">By region</a>
+  <ul class="collapse">
+  <li><a href="#period-1" id="toc-period-1" class="nav-link" data-scroll-target="#period-1">Period 1</a></li>
+  <li><a href="#period-2" id="toc-period-2" class="nav-link" data-scroll-target="#period-2">Period 2</a></li>
+  </ul></li>
+  <li><a href="#by-sex-assigned-at-birth" id="toc-by-sex-assigned-at-birth" class="nav-link" data-scroll-target="#by-sex-assigned-at-birth">By sex assigned at birth</a>
+  <ul class="collapse">
+  <li><a href="#period-1-1" id="toc-period-1-1" class="nav-link" data-scroll-target="#period-1-1">Period 1</a></li>
+  <li><a href="#period-2-1" id="toc-period-2-1" class="nav-link" data-scroll-target="#period-2-1">Period 2</a></li>
+  </ul></li>
+  <li><a href="#by-ethnicity" id="toc-by-ethnicity" class="nav-link" data-scroll-target="#by-ethnicity">By ethnicity</a>
+  <ul class="collapse">
+  <li><a href="#period-1-2" id="toc-period-1-2" class="nav-link" data-scroll-target="#period-1-2">Period 1</a></li>
+  <li><a href="#period-2-2" id="toc-period-2-2" class="nav-link" data-scroll-target="#period-2-2">Period 2</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Descriptives report</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Thomas E. Metherell </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="dependencies">Dependencies</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.4.1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'knitr' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(targets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'targets' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tar_read</span>(descriptive_dataset)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Recoding ethnicity to make easier to read</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>DDC06E00 <span class="ot">&lt;-</span> <span class="fu">recode</span>(data<span class="sc">$</span>DDC06E00, <span class="st">`</span><span class="at">0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"White"</span>, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Ethnic minority"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="social-media-use" class="level2">
+<h2 class="anchored" data-anchor-id="social-media-use">Social media use</h2>
+<section id="age-11" class="level3">
+<h3 class="anchored" data-anchor-id="age-11">Age 11</h3>
+<p>The number of participants with non-missing social media use data at age 11 is 8617.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data_smu1_plot <span class="ot">&lt;-</span> data</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>data_smu1_plot <span class="ot">&lt;-</span> data_smu1_plot <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(MCSID, CNUM, ECQ09X00) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ECQ09X00)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ECQ09X00 =</span> <span class="fu">case_match</span>(ECQ09X00,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Never"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Less often than once a month"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span> <span class="sc">~</span> <span class="st">"At least once a month"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span> <span class="sc">~</span> <span class="st">"At least once a week"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Most days"</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>data_smu1_plot<span class="sc">$</span>ECQ09X00 <span class="ot">&lt;-</span> <span class="fu">factor</span>(data_smu1_plot<span class="sc">$</span>ECQ09X00, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Never"</span>, <span class="st">"Less often than once a month"</span>, <span class="st">"At least once a month"</span>, <span class="st">"At least once a week"</span>, <span class="st">"Most days"</span>))</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_smu1_plot, <span class="fu">aes</span>(<span class="at">x =</span> ECQ09X00)) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Social media use frequency (age 11)"</span>, <span class="at">y =</span> <span class="st">"Number of participants"</span>) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="descriptives_report_files/figure-html/smu_1-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="numbers-in-categories-of-usage" class="level4">
+<h4 class="anchored" data-anchor-id="numbers-in-categories-of-usage">Numbers in categories of usage</h4>
+<section id="cross-tabulated-with-categorical-interaction-variables" class="level5">
+<h5 class="anchored" data-anchor-id="cross-tabulated-with-categorical-interaction-variables">Cross-tabulated with categorical interaction variables</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data_smu1_cat <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">ECQ09X00 =</span> <span class="fu">case_when</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  ECQ09X00 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Never"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  ECQ09X00 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>) <span class="sc">~</span> <span class="st">"Less often than most days"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  ECQ09X00 <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Most days"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>data_smu1_cat<span class="sc">$</span>ECQ09X00 <span class="ot">&lt;-</span> <span class="fu">factor</span>(data_smu1_cat<span class="sc">$</span>ECQ09X00, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Never"</span>, <span class="st">"Less often than most days"</span>, <span class="st">"Most days"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_smu1_cat<span class="sc">$</span>ECQ09X00, data_smu1_cat<span class="sc">$</span>AHCSEX00, data_smu1_cat<span class="sc">$</span>HES_ei1) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Social media use frequency</span><span class="st">`</span> <span class="ot">=</span> Var1, <span class="st">`</span><span class="at">Sex assigned at birth</span><span class="st">`</span> <span class="ot">=</span> Var2, <span class="st">`</span><span class="at">HES event (period 1)?</span><span class="st">`</span> <span class="ot">=</span> Var3) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Freq =</span> <span class="fu">case_match</span>(Freq, <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span> <span class="sc">~</span> <span class="st">"&lt;10"</span>, <span class="at">.default =</span> <span class="fu">as.character</span>(Freq)), <span class="at">Freq =</span> <span class="fu">case_when</span>(<span class="st">`</span><span class="at">Social media use frequency</span><span class="st">`</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Less often than most days"</span>, <span class="st">"Most days"</span>) <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Sex assigned at birth</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Male"</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">HES event (period 1)?</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"."</span>, <span class="cn">TRUE</span> <span class="sc">~</span> Freq)) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Social media use frequency</th>
+<th style="text-align: left;">Sex assigned at birth</th>
+<th style="text-align: left;">HES event (period 1)?</th>
+<th style="text-align: left;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2411</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">998</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">639</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2313</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">948</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">790</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_smu1_cat<span class="sc">$</span>ECQ09X00, data_smu1_cat<span class="sc">$</span>DDC06E00, data_smu1_cat<span class="sc">$</span>HES_ei1) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Social media use frequency</span><span class="st">`</span> <span class="ot">=</span> Var1, <span class="at">Ethnicity =</span> Var2, <span class="st">`</span><span class="at">HES event (period 1)?</span><span class="st">`</span> <span class="ot">=</span> Var3) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Freq =</span> <span class="fu">case_match</span>(Freq, <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span> <span class="sc">~</span> <span class="st">"&lt;10"</span>, <span class="at">.default =</span> <span class="fu">as.character</span>(Freq)))<span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 22%">
+<col style="width: 31%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Social media use frequency</th>
+<th style="text-align: left;">Ethnicity</th>
+<th style="text-align: left;">HES event (period 1)?</th>
+<th style="text-align: left;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">3320</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1470</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1132</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">311</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">162</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Never</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Less often than most days</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Most days</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="characteristics-of-non-users-vs-users" class="level4">
+<h4 class="anchored" data-anchor-id="characteristics-of-non-users-vs-users">Characteristics of non-users vs users</h4>
+<section id="non-users" class="level5">
+<h5 class="anchored" data-anchor-id="non-users">Non-users</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_subset_smu1_0 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, data<span class="sc">$</span>ECQ09X00 <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">"Income (DDOEDE00):</span><span class="sc">\n</span><span class="st">Mean:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">mean</span>(data_subset_smu1_0<span class="sc">$</span>DDOEDE00, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">Standard deviation:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">sd</span>(data_subset_smu1_0<span class="sc">$</span>DDOEDE00, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Income (DDOEDE00):
+Mean: 419.9 
+Standard deviation: 245.2</code></pre>
+</div>
+</div>
+</section>
+<section id="users" class="level5">
+<h5 class="anchored" data-anchor-id="users">Users</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data_subset_smu1_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, data<span class="sc">$</span>ECQ09X00 <span class="sc">!=</span> <span class="dv">1</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">"Income (DDOEDE00):</span><span class="sc">\n</span><span class="st">Mean:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">mean</span>(data_subset_smu1_1<span class="sc">$</span>DDOEDE00, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">Standard deviation:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">sd</span>(data_subset_smu1_1<span class="sc">$</span>DDOEDE00, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Income (DDOEDE00):
+Mean: 359.1 
+Standard deviation: 216.9</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="age-14" class="level3">
+<h3 class="anchored" data-anchor-id="age-14">Age 14</h3>
+<p>The number of participants with non-missing social media use data at age 14 is 2478. The histogram is truncated at 3 hours, 7.5 minutes to prevent disclosure (number of participants with usage between 2 hours, 52.5 minutes and 3 hours, 7.5 minutes = 11).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data[data<span class="sc">$</span>mcs6_sm_per_day <span class="sc">&lt;</span> <span class="fl">187.5</span>,], <span class="fu">aes</span>(<span class="at">x =</span> mcs6_sm_per_day)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Social media use time in minutes per day (age 14)"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">180</span>, <span class="dv">30</span>)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 10108 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="descriptives_report_files/figure-html/smu_2_1-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Percentiles:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>smu_2_percentiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(data<span class="sc">$</span>mcs6_sm_per_day, <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.9</span>, <span class="fl">0.1</span>), <span class="fl">0.99</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(smu_2_percentiles) <span class="ot">&lt;-</span> <span class="st">"Social media use per day (minutes)"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>smu_2_percentiles <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Social media use per day (minutes)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0%</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10%</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20%</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">30%</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">40%</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">50%</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">60%</td>
+<td style="text-align: right;">15.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">70%</td>
+<td style="text-align: right;">30.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">80%</td>
+<td style="text-align: right;">45.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">90%</td>
+<td style="text-align: right;">85.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99%</td>
+<td style="text-align: right;">267.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="numbers-in-categories-of-usage-1" class="level4">
+<h4 class="anchored" data-anchor-id="numbers-in-categories-of-usage-1">Numbers in categories of usage</h4>
+<section id="total" class="level5">
+<h5 class="anchored" data-anchor-id="total">Total</h5>
+<section id="hour-threshold" class="level6">
+<h6 class="anchored" data-anchor-id="hour-threshold">1-hour threshold</h6>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>data_smu2_cat1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mcs6_sm_per_day =</span> <span class="fu">case_when</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> mcs6_sm_per_day <span class="sc">&lt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"Moderate"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"High"</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_smu2_cat1<span class="sc">$</span>mcs6_sm_per_day) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Social media use per day</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Social media use per day</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">352</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: right;">867</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: right;">1259</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="hour-threshold-1" class="level6">
+<h6 class="anchored" data-anchor-id="hour-threshold-1">2-hour threshold</h6>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>data_smu2_cat2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mcs6_sm_per_day =</span> <span class="fu">case_when</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> mcs6_sm_per_day <span class="sc">&lt;=</span> <span class="dv">120</span> <span class="sc">~</span> <span class="st">"Moderate"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">120</span> <span class="sc">~</span> <span class="st">"High"</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Suppressed to prevent disclosure.</p>
+</section>
+<section id="hour-threshold-2" class="level6">
+<h6 class="anchored" data-anchor-id="hour-threshold-2">3-hour threshold</h6>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>data_smu2_cat3 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mcs6_sm_per_day =</span> <span class="fu">case_when</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> mcs6_sm_per_day <span class="sc">&lt;=</span> <span class="dv">180</span> <span class="sc">~</span> <span class="st">"Moderate"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">180</span> <span class="sc">~</span> <span class="st">"High"</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_smu2_cat3<span class="sc">$</span>mcs6_sm_per_day) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Social media use per day</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Social media use per day</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">57</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: right;">1162</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: right;">1259</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="hour-threshold-3" class="level6">
+<h6 class="anchored" data-anchor-id="hour-threshold-3">4-hour threshold</h6>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>data_smu2_cat4 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mcs6_sm_per_day =</span> <span class="fu">case_when</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"None"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> mcs6_sm_per_day <span class="sc">&lt;=</span> <span class="dv">240</span> <span class="sc">~</span> <span class="st">"Moderate"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  mcs6_sm_per_day <span class="sc">&gt;</span> <span class="dv">240</span> <span class="sc">~</span> <span class="st">"High"</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_smu2_cat4<span class="sc">$</span>mcs6_sm_per_day) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Social media use per day</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Social media use per day</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: right;">1189</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: right;">1259</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="cross-tabulated-with-categorical-interaction-variables-1" class="level5">
+<h5 class="anchored" data-anchor-id="cross-tabulated-with-categorical-interaction-variables-1">Cross-tabulated with categorical interaction variables</h5>
+<p>The following are for a 2-hour threshold only.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_smu2_cat2<span class="sc">$</span>mcs6_sm_per_day, data_smu2_cat2<span class="sc">$</span>AHCSEX00, data_smu2_cat2<span class="sc">$</span>HES_ei2) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Social media use per day</span><span class="st">`</span> <span class="ot">=</span> Var1, <span class="st">`</span><span class="at">Sex assigned at birth</span><span class="st">`</span> <span class="ot">=</span> Var2, <span class="st">`</span><span class="at">HES event (period 2)?</span><span class="st">`</span> <span class="ot">=</span> Var3) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Freq =</span> <span class="fu">case_match</span>(Freq, <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span> <span class="sc">~</span> <span class="st">"&lt;10"</span>, <span class="at">.default =</span> <span class="fu">as.character</span>(Freq)), <span class="at">Freq =</span> <span class="fu">case_when</span>(<span class="st">`</span><span class="at">Social media use per day</span><span class="st">`</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Moderate"</span>, <span class="st">"High"</span>) <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Sex assigned at birth</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Female"</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">HES event (period 2)?</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"."</span>, <span class="cn">TRUE</span> <span class="sc">~</span> Freq)) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Social media use per day</th>
+<th style="text-align: left;">Sex assigned at birth</th>
+<th style="text-align: left;">HES event (period 2)?</th>
+<th style="text-align: left;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">338</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">706</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">473</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">19</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_smu2_cat2<span class="sc">$</span>mcs6_sm_per_day, data_smu2_cat2<span class="sc">$</span>DDC06E00, data_smu2_cat2<span class="sc">$</span>HES_ei2) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Social media use per day</span><span class="st">`</span> <span class="ot">=</span> Var1, <span class="at">Ethnicity =</span> Var2, <span class="st">`</span><span class="at">HES event (period 2)?</span><span class="st">`</span> <span class="ot">=</span> Var3) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Freq =</span> <span class="fu">case_match</span>(Freq, <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span> <span class="sc">~</span> <span class="st">"&lt;10"</span>, <span class="at">.default =</span> <span class="fu">as.character</span>(Freq))) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 23%">
+<col style="width: 32%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Social media use per day</th>
+<th style="text-align: left;">Ethnicity</th>
+<th style="text-align: left;">HES event (period 2)?</th>
+<th style="text-align: left;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">102</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">785</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">914</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">185</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">183</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="characteristics-of-non-users-vs-users-1" class="level4">
+<h4 class="anchored" data-anchor-id="characteristics-of-non-users-vs-users-1">Characteristics of non-users vs users</h4>
+<section id="non-users-1" class="level5">
+<h5 class="anchored" data-anchor-id="non-users-1">Non-users</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>data_subset_smu2_0 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, data<span class="sc">$</span>mcs6_sm_per_day <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">"Income (EOEDE000):</span><span class="sc">\n</span><span class="st">Mean:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">mean</span>(data_subset_smu2_0<span class="sc">$</span>EOEDE000, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">Standard deviation:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">sd</span>(data_subset_smu2_0<span class="sc">$</span>EOEDE000, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Income (EOEDE000):
+Mean: 459 
+Standard deviation: 186.9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">"Household wealth (mcs5_wealth):</span><span class="sc">\n</span><span class="st">Mean:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">mean</span>(data_subset_smu2_0<span class="sc">$</span>mcs5_wealth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">Standard deviation:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">sd</span>(data_subset_smu2_0<span class="sc">$</span>mcs5_wealth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Household wealth (mcs5_wealth):
+Mean: 198377.6 
+Standard deviation: 283326.9</code></pre>
+</div>
+</div>
+</section>
+<section id="users-1" class="level5">
+<h5 class="anchored" data-anchor-id="users-1">Users</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>data_subset_smu2_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, data<span class="sc">$</span>mcs6_sm_per_day <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">"Income (EOEDE000):</span><span class="sc">\n</span><span class="st">Mean:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">mean</span>(data_subset_smu2_1<span class="sc">$</span>EOEDE000, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">Standard deviation:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">sd</span>(data_subset_smu2_1<span class="sc">$</span>EOEDE000, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Income (EOEDE000):
+Mean: 450 
+Standard deviation: 178</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">"Household wealth (mcs5_wealth):</span><span class="sc">\n</span><span class="st">Mean:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">mean</span>(data_subset_smu2_1<span class="sc">$</span>mcs5_wealth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">Standard deviation:"</span>, <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">sd</span>(data_subset_smu2_1<span class="sc">$</span>mcs5_wealth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Household wealth (mcs5_wealth):
+Mean: 224134.4 
+Standard deviation: 479176.2</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="hes-episodes" class="level2">
+<h2 class="anchored" data-anchor-id="hes-episodes">HES episodes</h2>
+<p>The total number of participants with a psychiatric episode recorded in period 1 is 65.</p>
+<p>The total number of participants with a psychiatric episode recorded in period 2 is 173.</p>
+<section id="cross-tabulation" class="level3">
+<h3 class="anchored" data-anchor-id="cross-tabulation">Cross-tabulation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>data_crosstab <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(MCSID, CNUM, CONSENT, HES_ei1, HES_ei2)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>data_crosstab <span class="ot">&lt;-</span> data_crosstab <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">HES_ei1 =</span> <span class="fu">if_else</span>(CONSENT <span class="sc">==</span> <span class="dv">0</span>, <span class="cn">NA</span>, HES_ei1),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">HES_ei2 =</span> <span class="fu">if_else</span>(CONSENT <span class="sc">==</span> <span class="dv">0</span>, <span class="cn">NA</span>, HES_ei2)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  data_crosstab<span class="sc">$</span>HES_ei1 <span class="sc">%&gt;%</span> <span class="fu">case_match</span>(<span class="dv">0</span> <span class="sc">~</span> <span class="st">"No (period 1)"</span>, <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes (period 1)"</span>, <span class="at">.default =</span> <span class="cn">NA</span>), </span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  data_crosstab<span class="sc">$</span>HES_ei2 <span class="sc">%&gt;%</span> <span class="fu">case_match</span>(<span class="dv">0</span> <span class="sc">~</span> <span class="st">"No (period 2)"</span>, <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes (period 2)"</span>, <span class="at">.default =</span> <span class="cn">NA</span>)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">No (period 2)</th>
+<th style="text-align: right;">Yes (period 2)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No (period 1)</td>
+<td style="text-align: right;">5975</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Yes (period 1)</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">17</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>In total 6390 eligible participants did not consent to HES linkage.</p>
+<p>Note that in the subsequent tables that the totals will not add up to the numbers above because the numbers of participants with missing responses to the grouping variables are not shown.</p>
+</section>
+<section id="by-region" class="level3">
+<h3 class="anchored" data-anchor-id="by-region">By region</h3>
+<section id="period-1" class="level4">
+<h4 class="anchored" data-anchor-id="period-1">Period 1</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>data_HES1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(HES_ei1 <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>((data_HES1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">DAREGN00 =</span> <span class="fu">as_factor</span>(DAREGN00)))<span class="sc">$</span>DAREGN00) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Region of residence</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Freq =</span> <span class="fu">case_match</span>(Freq, <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span> <span class="sc">~</span> <span class="st">"&lt;10"</span>, <span class="at">.default =</span> <span class="fu">as.character</span>(Freq))) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Region of residence</th>
+<th style="text-align: left;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">North East</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">North West</td>
+<td style="text-align: left;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Yorkshire and the Humber</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">East Midlands</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">West Midlands</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">East of England</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">London</td>
+<td style="text-align: left;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South East</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South West</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="period-2" class="level4">
+<h4 class="anchored" data-anchor-id="period-2">Period 2</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>data_HES2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(HES_ei2 <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>((data_HES2 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">EAREGN00 =</span> <span class="fu">as_factor</span>(EAREGN00)))<span class="sc">$</span>EAREGN00) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Region of residence</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Freq =</span> <span class="fu">case_match</span>(Freq, <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span> <span class="sc">~</span> <span class="st">"&lt;10"</span>, <span class="at">.default =</span> <span class="fu">as.character</span>(Freq))) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Region of residence</th>
+<th style="text-align: left;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">North East</td>
+<td style="text-align: left;">&lt;10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">North West</td>
+<td style="text-align: left;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Yorkshire and the Humber</td>
+<td style="text-align: left;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">East Midlands</td>
+<td style="text-align: left;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">West Midlands</td>
+<td style="text-align: left;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">East of England</td>
+<td style="text-align: left;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">London</td>
+<td style="text-align: left;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South East</td>
+<td style="text-align: left;">34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South West</td>
+<td style="text-align: left;">18</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="by-sex-assigned-at-birth" class="level3">
+<h3 class="anchored" data-anchor-id="by-sex-assigned-at-birth">By sex assigned at birth</h3>
+<section id="period-1-1" class="level4">
+<h4 class="anchored" data-anchor-id="period-1-1">Period 1</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_HES1<span class="sc">$</span>AHCSEX00) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Sex assigned at birth</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sex assigned at birth</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="period-2-1" class="level4">
+<h4 class="anchored" data-anchor-id="period-2-1">Period 2</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_HES2<span class="sc">$</span>AHCSEX00) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Sex assigned at birth</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sex assigned at birth</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">109</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="by-ethnicity" class="level3">
+<h3 class="anchored" data-anchor-id="by-ethnicity">By ethnicity</h3>
+<section id="period-1-2" class="level4">
+<h4 class="anchored" data-anchor-id="period-1-2">Period 1</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_HES1<span class="sc">$</span>DDC06E00) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Ethnicity</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ethnicity</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">White</td>
+<td style="text-align: right;">49</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: right;">11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="period-2-2" class="level4">
+<h4 class="anchored" data-anchor-id="period-2-2">Period 2</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_HES2<span class="sc">$</span>DDC06E00) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">`</span><span class="at">Ethnicity</span><span class="st">`</span> <span class="ot">=</span> Var1) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ethnicity</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">White</td>
+<td style="text-align: right;">128</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethnic minority</td>
+<td style="text-align: right;">23</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
