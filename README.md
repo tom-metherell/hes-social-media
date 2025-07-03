@@ -2,7 +2,7 @@
 
 This repository contains the supplementary data for the paper "Characterising the longitudinal relationship between social media use and psychiatric diagnoses in secondary care in adolescents in England" (preprint coming soon).
 
-Please review the licensing information at [LICENCE](https://github.com/tom-metherell/hes-social-media/blob/main/LICENCE) before reusing any software in this repository.
+Please review the licensing information at [`LICENCE.md`](https://github.com/tom-metherell/hes-social-media/blob/main/LICENCE.md) and [`THIRDPARTY.md`](https://github.com/tom-metherell/hes-social-media/blob/main/THIRDPARTY.md) before reusing any software in this repository.
 
 ## Data source
 
