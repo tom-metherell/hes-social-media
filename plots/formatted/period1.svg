@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="451.28pt"
+   height="283.46pt"
+   viewBox="0 0 451.28 283.46"
+   version="1.1"
+   id="svg58"
+   sodipodi:docname="period1.svg"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   inkscape:export-filename="period1.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs58" />
+  <sodipodi:namedview
+     id="namedview58"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     inkscape:zoom="0.73185181"
+     inkscape:cx="297.19131"
+     inkscape:cy="201.54353"
+     inkscape:window-width="1512"
+     inkscape:window-height="842"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g57"
+     inkscape:export-bgcolor="#ffffffff" />
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-weight:bold;font-size:6.67px;font-family:Arial;-inkscape-font-specification:'Arial Bold Italic';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#ffffff;stroke-width:1.5"
+     x="237.58"
+     y="276.57999"
+     id="text58"><tspan
+       sodipodi:role="line"
+       id="tspan58"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.67px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#000000;stroke-width:1.5"
+       x="237.58"
+       y="276.57999">Hazard ratio</tspan></text>
+  <g
+     class="svglite"
+     id="g58">
+    <defs
+       id="defs1">
+      <style
+         type="text/css"
+         id="style1"><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+    </defs>
+    <rect
+       width="100%"
+       height="100%"
+       style="stroke: none; fill: none;"
+       id="rect1" />
+    <defs
+       id="defs2">
+      <clipPath
+         id="cpMC4wMHw0NTEuMjh8MC4wMHwyODMuNDY=">
+        <rect
+           x="0.00"
+           y="0.00"
+           width="451.28"
+           height="283.46"
+           id="rect2" />
+      </clipPath>
+    </defs>
+    <g
+       clip-path="url(#cpMC4wMHw0NTEuMjh8MC4wMHwyODMuNDY=)"
+       id="g2" />
+    <defs
+       id="defs3">
+      <clipPath
+         id="cpMTIzLjI5fDM1MS44N3w1LjQ4fDI1OS4yMQ==">
+        <rect
+           x="123.29"
+           y="5.48"
+           width="228.58"
+           height="253.73"
+           id="rect3" />
+      </clipPath>
+    </defs>
+    <g
+       clip-path="url(#cpMTIzLjI5fDM1MS44N3w1LjQ4fDI1OS4yMQ==)"
+       id="g37">
+      <polyline
+         points="126.83,259.21 126.83,5.48 "
+         style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline3" />
+      <polyline
+         points="212.69,259.21 212.69,5.48 "
+         style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline4" />
+      <polyline
+         points="298.55,259.21 298.55,5.48 "
+         style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline5" />
+      <polyline
+         points="123.29,240.65 351.87,240.65 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline6" />
+      <polyline
+         points="123.29,209.70 351.87,209.70 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline7" />
+      <polyline
+         points="123.29,178.76 351.87,178.76 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline8" />
+      <polyline
+         points="123.29,147.82 351.87,147.82 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline9" />
+      <polyline
+         points="123.29,116.87 351.87,116.87 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline10" />
+      <polyline
+         points="123.29,85.93 351.87,85.93 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline11" />
+      <polyline
+         points="123.29,54.99 351.87,54.99 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline12" />
+      <polyline
+         points="123.29,24.05 351.87,24.05 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline13" />
+      <polyline
+         points="169.76,259.21 169.76,5.48 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline14" />
+      <polyline
+         points="255.62,259.21 255.62,5.48 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline15" />
+      <polyline
+         points="341.48,259.21 341.48,5.48 "
+         style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"
+         id="polyline16" />
+      <rect
+         style="fill:#ffffff;stroke-width:1.5;stroke:#ffffff"
+         id="rect63"
+         width="77.689438"
+         height="18.57"
+         x="274.55353"
+         y="15.43747" />
+      <rect
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect63-2"
+         width="77.689438"
+         height="18.57"
+         x="274.32361"
+         y="46.377472" />
+      <rect
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect63-2-5"
+         width="77.689438"
+         height="18.57"
+         x="274.55353"
+         y="77.317474" />
+      <rect
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect63-2-5-6"
+         width="77.689438"
+         height="18.57"
+         x="275.24002"
+         y="108.25748" />
+      <rect
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect63-2-5-6-5"
+         width="77.689438"
+         height="18.57"
+         x="274.32361"
+         y="139.19748" />
+      <rect
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect63-2-5-6-5-3"
+         width="77.689438"
+         height="18.57"
+         x="274.55353"
+         y="170.13748" />
+      <rect
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect63-2-5-6-5-3-7"
+         width="77.689438"
+         height="18.57"
+         x="274.55353"
+         y="201.07748" />
+      <rect
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect63-2-5-6-5-3-7-7"
+         width="77.689438"
+         height="18.57"
+         x="274.55353"
+         y="232.01749" />
+      <line
+         x1="161.24"
+         y1="24.05"
+         x2="186.74"
+         y2="24.05"
+         style="stroke-width: 1.07; stroke: #1B9E77; stroke-linecap: butt;"
+         id="line16" />
+      <line
+         x1="140.98"
+         y1="54.99"
+         x2="179.92"
+         y2="54.99"
+         style="stroke-width: 1.07; stroke: #D95F02; stroke-linecap: butt;"
+         id="line17" />
+      <line
+         x1="145.81"
+         y1="85.93"
+         x2="217.04"
+         y2="85.93"
+         style="stroke-width: 1.07; stroke: #D95F02; stroke-linecap: butt;"
+         id="line18" />
+      <line
+         x1="144.16"
+         y1="116.87"
+         x2="269.43"
+         y2="116.87"
+         style="stroke-width: 1.07; stroke: #D95F02; stroke-linecap: butt;"
+         id="line19" />
+      <line
+         x1="134.98"
+         y1="147.82"
+         x2="186.44"
+         y2="147.82"
+         style="stroke-width: 1.07; stroke: #7570B3; stroke-linecap: butt;"
+         id="line20" />
+      <line
+         x1="165.26"
+         y1="178.76"
+         x2="187.57"
+         y2="178.76"
+         style="stroke-width: 1.07; stroke: #7570B3; stroke-linecap: butt;"
+         id="line21" />
+      <line
+         x1="157.88"
+         y1="209.70"
+         x2="185.92"
+         y2="209.70"
+         style="stroke-width: 1.07; stroke: #7570B3; stroke-linecap: butt;"
+         id="line22" />
+      <line
+         x1="174.09"
+         y1="240.65"
+         x2="199.86"
+         y2="240.65"
+         style="stroke-width: 1.07; stroke: #E7298A; stroke-linecap: butt;"
+         id="line23" />
+      <circle
+         cx="173.99"
+         cy="24.05"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #1B9E77; fill: #1B9E77;"
+         id="circle23" />
+      <circle
+         cx="160.45"
+         cy="54.99"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #D95F02; fill: #D95F02;"
+         id="circle24" />
+      <circle
+         cx="181.42"
+         cy="85.93"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #D95F02; fill: #D95F02;"
+         id="circle25" />
+      <circle
+         cx="206.80"
+         cy="116.87"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #D95F02; fill: #D95F02;"
+         id="circle26" />
+      <circle
+         cx="160.71"
+         cy="147.82"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #7570B3; fill: #7570B3;"
+         id="circle27" />
+      <circle
+         cx="176.42"
+         cy="178.76"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #7570B3; fill: #7570B3;"
+         id="circle28" />
+      <circle
+         cx="171.90"
+         cy="209.70"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #7570B3; fill: #7570B3;"
+         id="circle29" />
+      <circle
+         cx="186.98"
+         cy="240.65"
+         r="2.84"
+         style="stroke-width: 1.42; stroke: #E7298A; fill: #E7298A;"
+         id="circle30" />
+      <line
+         x1="169.76"
+         y1="259.21"
+         x2="169.76"
+         y2="5.48"
+         style="stroke-width: 1.07; stroke-dasharray: 1.42,4.27; stroke-linecap: butt;"
+         id="line30" />
+      <text
+         x="281.47"
+         y="26.49"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="63.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text30">1.120 (0.796,  1.577)</text>
+      <text
+         x="281.47"
+         y="57.43"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="63.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text31">0.779 (0.462,  1.313)</text>
+      <text
+         x="281.47"
+         y="88.38"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="63.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text32">1.367 (0.526,  3.554)</text>
+      <text
+         x="281.47"
+         y="119.32"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="65.27px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text33">2.700 (0.503, 14.484)</text>
+      <text
+         x="281.47"
+         y="150.26"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="63.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text34">0.785 (0.394,  1.564)</text>
+      <text
+         x="281.47"
+         y="181.20"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="63.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text35">1.195 (0.886,  1.612)</text>
+      <text
+         x="281.47"
+         y="212.15"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="63.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text36">1.059 (0.727,  1.542)</text>
+      <text
+         x="281.47"
+         y="243.09"
+         style="font-size: 6.83px; font-family: &quot;Arial&quot;;"
+         textLength="63.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text37">1.587 (1.123,  2.242)</text>
+    </g>
+    <g
+       clip-path="url(#cpMC4wMHw0NTEuMjh8MC4wMHwyODMuNDY=)"
+       id="g57">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.42197"
+         y="26.486866"
+         id="text63"><tspan
+           sodipodi:role="line"
+           id="tspan63"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:1.5"
+           x="118.42197"
+           y="26.486866">Social media use</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.40192"
+         y="53.059456"
+         id="text64"><tspan
+           sodipodi:role="line"
+           id="tspan64"
+           style="stroke-width:1.5"
+           x="118.40192"
+           y="53.059456"
+           dy="0">Number of employees</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:1.5"
+           x="118.40192"
+           y="61.596954"
+           id="tspan65">at parent's workplace</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;white-space:pre;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.41388"
+         y="83.91774"
+         id="text64-5"><tspan
+           sodipodi:role="line"
+           style="stroke-width:1.5"
+           x="118.41388"
+           y="83.91774"
+           id="tspan65-3">Attitude to pirating</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:1.5"
+           x="118.41388"
+           y="92.455238"
+           id="tspan66">(a bit wrong)</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;white-space:pre;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.41389"
+         y="114.85774"
+         id="text64-5-7"><tspan
+           sodipodi:role="line"
+           style="stroke-width:1.5"
+           x="118.41389"
+           y="114.85774"
+           id="tspan65-3-0">Attitude to pirating</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:1.5"
+           x="118.41389"
+           y="123.39524"
+           id="tspan66-0">(not wrong)</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.41994"
+         y="150.11697"
+         id="text67"><tspan
+           sodipodi:role="line"
+           id="tspan67"
+           style="stroke-width:1.5"
+           x="118.41994"
+           y="150.11697">Sleep</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.42191"
+         y="181.19807"
+         id="text68"><tspan
+           sodipodi:role="line"
+           id="tspan68"
+           style="stroke-width:1.5"
+           x="118.42191"
+           y="181.19807">Exercise</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.46251"
+         y="211.99782"
+         id="text69"><tspan
+           sodipodi:role="line"
+           id="tspan69"
+           style="stroke-width:1.5"
+           x="118.46251"
+           y="211.99782">In-person social interaction</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;writing-mode:lr-tb;direction:ltr;text-anchor:end;fill:#000000;stroke:none;stroke-width:1.5"
+         x="118.42201"
+         y="243.05464"
+         id="text70"><tspan
+           sodipodi:role="line"
+           id="tspan70"
+           style="stroke-width:1.5"
+           x="118.42201"
+           y="243.05464">SDQ Total Difficulties score</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:1.5"
+         x="383.0701"
+         y="114.16"
+         id="text59"><tspan
+           sodipodi:role="line"
+           id="tspan59"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:1.5"
+           x="383.0701"
+           y="114.16">Main</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:1.5"
+         x="383.06973"
+         y="131.44"
+         id="text60"><tspan
+           sodipodi:role="line"
+           id="tspan60"
+           style="text-align:start;text-anchor:start;stroke-width:1.5"
+           x="383.06973"
+           y="131.44">Negative control</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:1.5"
+         x="383.06982"
+         y="148.72"
+         id="text61"><tspan
+           sodipodi:role="line"
+           id="tspan61"
+           style="stroke-width:1.5"
+           x="383.06982"
+           y="148.72">Competing exposure</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.83px;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:1.5"
+         x="383.07007"
+         y="166"
+         id="text62"><tspan
+           sodipodi:role="line"
+           id="tspan62"
+           style="stroke-width:1.5"
+           x="383.07007"
+           y="166">Positive control</tspan></text>
+      <text
+         x="169.76"
+         y="267.96"
+         text-anchor="middle"
+         style="font-size: 5.33px;fill: #4D4D4D; font-family: &quot;Arial&quot;;"
+         textLength="2.97px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text46">1</text>
+      <text
+         x="255.62"
+         y="267.96"
+         text-anchor="middle"
+         style="font-size: 5.33px;fill: #4D4D4D; font-family: &quot;Arial&quot;;"
+         textLength="5.94px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text47">10</text>
+      <text
+         x="341.48"
+         y="267.96"
+         text-anchor="middle"
+         style="font-size: 5.33px;fill: #4D4D4D; font-family: &quot;Arial&quot;;"
+         textLength="8.91px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text48">100</text>
+      <text
+         transform="translate(10.25,132.35) rotate(-90)"
+         text-anchor="middle"
+         style="font-size:6.67px;font-family:Arial;-inkscape-font-specification:'Arial Bold';font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal"
+         textLength="28.12px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text50">Exposure</text>
+      <text
+         x="368.31"
+         y="97.43"
+         style="font-size:6.83px;font-family:Arial;-inkscape-font-specification:'Arial Bold';font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal"
+         textLength="14.42"
+         lengthAdjust="spacingAndGlyphs"
+         id="text51"
+         transform="translate(-4.5)">Type</text>
+      <line
+         x1="365.54001"
+         y1="112.25"
+         x2="379.35999"
+         y2="112.25"
+         style="stroke:#1b9e77;stroke-width:1.07;stroke-linecap:butt"
+         id="line51" />
+      <circle
+         cx="372.45001"
+         cy="112.25"
+         r="2.8399999"
+         style="fill:#1b9e77;stroke:#1b9e77;stroke-width:1.42"
+         id="circle51" />
+      <line
+         x1="365.54001"
+         y1="129.53"
+         x2="379.35999"
+         y2="129.53"
+         style="stroke:#d95f02;stroke-width:1.07;stroke-linecap:butt"
+         id="line52" />
+      <circle
+         cx="372.45001"
+         cy="129.53"
+         r="2.8399999"
+         style="fill:#d95f02;stroke:#d95f02;stroke-width:1.42"
+         id="circle52" />
+      <line
+         x1="365.54001"
+         y1="146.81"
+         x2="379.35999"
+         y2="146.81"
+         style="stroke:#7570b3;stroke-width:1.07;stroke-linecap:butt"
+         id="line53" />
+      <circle
+         cx="372.45001"
+         cy="146.81"
+         r="2.8399999"
+         style="fill:#7570b3;stroke:#7570b3;stroke-width:1.42"
+         id="circle53" />
+      <line
+         x1="365.54001"
+         y1="164.09"
+         x2="379.35999"
+         y2="164.09"
+         style="stroke:#e7298a;stroke-width:1.07;stroke-linecap:butt"
+         id="line54" />
+      <circle
+         cx="372.45001"
+         cy="164.09"
+         r="2.8399999"
+         style="fill:#e7298a;stroke:#e7298a;stroke-width:1.42"
+         id="circle54" />
+    </g>
+  </g>
+</svg>
