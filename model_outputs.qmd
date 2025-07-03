@@ -14,6 +14,7 @@ library(ggforce)
 library(ggplot2)
 library(knitr)
 library(RColorBrewer)
+library(svglite)
 library(targets)
 library(tidyr)
 
@@ -235,7 +236,8 @@ ggplot(plot_data[plot_data$period == 1,], aes(x = exp(coef), xmin = exp(coef - q
   theme_minimal() +
   theme(text = element_text(size = 20/3))
 
-ggsave("plots/fig2.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+ggsave("plots/period1.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+ggsave("plots/period1.svg", height = 10, width = 15.92, units = "cm")
 ```
 
 #### Period 2
@@ -255,7 +257,8 @@ ggplot(plot_data[plot_data$period == 2,], aes(x = exp(coef), xmin = exp(coef - q
   theme_minimal() +
   theme(text = element_text(size = 20/3))
 
-ggsave("plots/fig3.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+ggsave("plots/period2.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+ggsave("plots/period2.svg", height = 10, width = 15.92, units = "cm")
 ```
 
 ## Sensitivity analyses
@@ -359,7 +362,8 @@ ggplot(plot_data2, aes(x = exp(coef), xmin = exp(coef - qt(0.975, df)*sqrt(var))
   theme(text = element_text(size = 10)) +
   facet_col(facets = vars(period), scales = "free_y", space = "free")
 
-ggsave("plots/fig4.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+ggsave("plots/categorical.png", height = 10, width = 15.92, units = "cm", dpi = 600)
+ggsave("plots/categorical.svg", height = 10, width = 15.92, units = "cm")
 ```
 
 ## Differential adjustment (categorised social media use)
