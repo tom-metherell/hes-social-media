@@ -10,7 +10,11 @@ The data used in this study are from the [Millennium Cohort Study](https://cls.u
 
 ## Data analysis
 
-The data analysis in this study uses R version 4.4.0 in the `renv` environment present in the repository, via the `targets` pipeline.
+The data analysis in this study uses R version 4.4.0 in the `renv` environment present in the repository, via the `targets` pipeline. To reproduce the analyses:
+1. Clone this repository into your trusted research environment.
+2. Create a new folder within the cloned repository directory called `data` and copy all data files (main survey data in .dta format, HES data in .sav format) to this folder.
+3. In an R (version 4.4.0) terminal running in the cloned repository directory, install the `renv` package if necessary (`install.packages("renv")`) and then run `renv::restore()` to install all remaining dependencies.
+4. Run `targets::tar_make()`.
 
 ## Supplementary information
 
