@@ -15,6 +15,8 @@ library(dplyr)
 library(ggplot2)
 library(haven)
 library(knitr)
+library(purrr)
+library(stringr)
 library(targets)
 
 data <- tar_read(descriptive_dataset)
@@ -256,4 +258,59 @@ table(data_HES1$DDC06E00) %>% data.frame() %>% rename(`Ethnicity` = Var1) |> kab
 
 ```{r HES_table_6}
 table(data_HES2$DDC06E00) %>% data.frame() %>% rename(`Ethnicity` = Var1) |> kable()
+```
+
+### By diagnosis
+Please note that some participants may have more than one diagnosis recorded in each period.
+
+#### Period 1
+
+```{r HES_table_7}
+table(unlist(
+  (data_HES1 %>%
+    mutate(HES_diagnoses1 = map(HES_diagnoses1, function(x){
+      recode <- c(
+        "^F(?:[0126][0-9]|9[1-5|8])$" = "Others (F00-F29, F60-F69, F91-F98)",
+        "^F[35][0-9]$" = "Mood (affective) disorders and behavioural syndromes associated with physiological disturbances and physical factors (F30-F39, F50-F59)",
+        "^F4[0-5|8]$" = "Neurotic, stress-related and somatoform disorders (F40-F48)",
+        "^F90$" = "Hyperkinetic disorders (F90)",
+        "^X60$" = "Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics (X60)",
+        "^X(?:6[1-9]|7[0-9]|8[0-4])$" = "Other intentional self-harm (X61-X84)"
+      )
+      for(p in names(recode)){
+        x <- str_replace_all(x, p, recode[[p]])
+      }
+      unique(x)
+    }))
+  )$HES_diagnoses1
+)) %>% data.frame () %>% rename(`Diagnosis` = Var1) %>% mutate("% of participants with diagnoses" = Freq/nrow(data_HES1) * 100, "% of participants consenting to HES linkage" = Freq/sum(data[!is.na(data$CONSENT),]$CONSENT) * 100) |> kable(digits = 2)
+```
+
+#### Period 2
+
+```{r HES_table_8}
+table(unlist(
+  (data_HES2 %>%
+    mutate(HES_diagnoses2 = map(HES_diagnoses2, function(x){
+      recode <- c(
+        "^F(?:[026][0-9]|9[1-9])$" = "Others (F00-F09, F20-F29, F60-F69, F91-F99)",
+        "^F1[0-6|89]$" = "Other mental and behavioural disorders due to psychoactive substance use (F10-F16, F18-F19)",
+        "^F17$" = "Mental and behavioural disorders due to use of tobacco (F17)",
+        "^F3[0-9]$" = "Mood (affective) disorders (F30-F39)",
+        "^F41$" = "Non-phobic anxiety disorders (F41)",
+        "^F4[0|2-5|8]$" = "Other neurotic, stress-related and somatoform disorders (F40, F42-F48)",
+        "^F5[0-9]$" = "Behavioural syndromes associated with physiological disturbances and physical factors (F50-F59)",
+        "^F90$" = "Hyperkinetic disorders (F90)",
+        "^X60$" = "Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics (X60)",
+        "^X6[12]$" = "Intentional self-poisoning by and exposure to antiepileptic, sedative-hypnotic, antiparkinsonism and psychotropic drugs, narcotics and psychodysleptics (hallucinogens) not elsewhere classified (X61-X62)",
+        "^X6[3-9]$" = "Other intentional self-poisoning (X63-X69)",
+        "^X(?:7[0-9]|8[0-4])$" = "Intentional self-harm other than by poisoning (X70-X84)"
+      )
+      for(p in names(recode)){
+        x <- str_replace_all(x, p, recode[[p]])
+      }
+      unique(x)
+    }))
+  )$HES_diagnoses2
+)) %>% data.frame() %>% rename(`Diagnosis` = Var1) %>% mutate("% of participants with diagnoses" = Freq/nrow(data_HES2) * 100, "% of participants consenting to HES linkage" = Freq/sum(data[!is.na(data$CONSENT),]$CONSENT) * 100) |> kable(digits = 2)
 ```

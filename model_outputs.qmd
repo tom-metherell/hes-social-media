@@ -13,6 +13,7 @@ library(dplyr)
 library(ggforce)
 library(ggplot2)
 library(knitr)
+library(mitml)
 library(RColorBrewer)
 library(svglite)
 library(targets)
@@ -138,6 +139,12 @@ for(i in seq_along(1:length(unique(datalist$type)))){
     print(format_table(tar_read_raw(paste("unweighted_model_summary", id, sep = "_")), vars_of_interest) |> kable(digits = 3))
     cat("\n\n##### Weighted\n\n")
     print(format_table(tar_read_raw(paste("weighted_model_summary", id, sep = "_")), vars_of_interest) |> kable(digits = 3))
+    cat("\n\n###### Comparison with null model (exposure removed)\n\n")
+    print(testModels(
+      tar_read_raw(paste("weighted_models", id, sep = "_")),
+      tar_read_raw(paste("null_weighted_models", id, sep = "_")),
+      method = "D1"
+    ))
     cat("\n\n")
   }
 }
@@ -151,7 +158,10 @@ for(i in seq_along(1:length(unique(datalist$type)))){
 #| results: asis
 
 terms <- c(
-  "Social media use",
+  "Social media use (adjusted)",
+  "Social media use (unadjusted)",
+  "Social media use (adjusted for\ncohort member's mental health only)",
+  "Social media use (adjusted for covariates\nexcept cohort member's mental health)",
   "Number of employees at parent's workplace",
   "Attitude to pirating (a bit wrong)",
   "Attitude to pirating (not wrong)",
@@ -162,68 +172,86 @@ terms <- c(
 )
 
 plot_data <- data.frame(
-  period = c(rep(1, 8), rep(2, 8)),
+  period = c(rep(1, 11), rep(2, 11)),
   term = rep(terms, 2),
-  Type = rep(c("Main", rep("Negative control", 3), rep("Competing exposure", 3), "Positive control"), 2),
-  coef = rep(NA, 16),
-  var = rep(NA, 16),
-  df = rep(NA, 16)
+  Type = rep(c(rep("Main", 4), rep("Negative control", 3), rep("Competing exposure", 3), "Positive control"), 2),
+  coef = rep(NA, 22),
+  var = rep(NA, 22),
+  df = rep(NA, 22)
 )
 
 plot_data$Type <- factor(plot_data$Type, ordered = TRUE, levels = c("Main", "Negative control", "Competing exposure", "Positive control"))
 
 plot_data$coef[1] <- tar_read(weighted_model_summary_sm1)$coefficients["ECQ09X00"]
-plot_data$coef[2] <- tar_read(weighted_model_summary_NCem1)$coefficients["EPEMPN00"]
-plot_data$coef[3] <- tar_read(weighted_model_summary_NCcd1)$coefficients["ECQ52X002"]
-plot_data$coef[4] <- tar_read(weighted_model_summary_NCcd1)$coefficients["ECQ52X003"]
-plot_data$coef[5] <- tar_read(weighted_model_summary_CXsl1)$coefficients["EPBERE001"]
-plot_data$coef[6] <- tar_read(weighted_model_summary_CXex1)$coefficients["mcs5_exercise"]
-plot_data$coef[7] <- tar_read(weighted_model_summary_CXsi1)$coefficients["mcs5_social_interaction"]
-plot_data$coef[8] <- tar_read(weighted_model_summary_PCtd1)$coefficients["EEBDTO_T"]
-plot_data$coef[9] <- tar_read(weighted_model_summary_sm2)$coefficients["mcs6_sm_per_day"]
-plot_data$coef[10] <- tar_read(weighted_model_summary_NCem2)$coefficients["FPEMPN00"]
-plot_data$coef[11] <- tar_read(weighted_model_summary_NCcd2)$coefficients["FCCOPY002"]
-plot_data$coef[12] <- tar_read(weighted_model_summary_NCcd2)$coefficients["FCCOPY003"]
-plot_data$coef[13] <- tar_read(weighted_model_summary_CXsl2)$coefficients["mcs6_sleep"]
-plot_data$coef[14] <- tar_read(weighted_model_summary_CXex2)$coefficients["FCPHEX00"]
-plot_data$coef[15] <- tar_read(weighted_model_summary_CXsi2)$coefficients["mcs6_social_interaction"]
-plot_data$coef[16] <- tar_read(weighted_model_summary_PCtd2)$coefficients["FEBDTOT"]
+plot_data$coef[2] <- tar_read(adj_weighted_model_summary_sm1_none)$coefficients["ECQ09X00"]
+plot_data$coef[3] <- tar_read(adj_weighted_model_summary_sm1_mh)$coefficients["ECQ09X00"]
+plot_data$coef[4] <- tar_read(adj_weighted_model_summary_sm1_nonmh)$coefficients["ECQ09X00"]
+plot_data$coef[5] <- tar_read(weighted_model_summary_NCem1)$coefficients["EPEMPN00"]
+plot_data$coef[6] <- tar_read(weighted_model_summary_NCcd1)$coefficients["ECQ52X002"]
+plot_data$coef[7] <- tar_read(weighted_model_summary_NCcd1)$coefficients["ECQ52X003"]
+plot_data$coef[8] <- tar_read(weighted_model_summary_CXsl1)$coefficients["EPBERE001"]
+plot_data$coef[9] <- tar_read(weighted_model_summary_CXex1)$coefficients["mcs5_exercise"]
+plot_data$coef[10] <- tar_read(weighted_model_summary_CXsi1)$coefficients["mcs5_social_interaction"]
+plot_data$coef[11] <- tar_read(weighted_model_summary_PCtd1)$coefficients["EEBDTO_T"]
+plot_data$coef[12] <- tar_read(weighted_model_summary_sm2)$coefficients["mcs6_sm_per_day"]
+plot_data$coef[13] <- tar_read(adj_weighted_model_summary_sm2_none)$coefficients["mcs6_sm_per_day"]
+plot_data$coef[14] <- tar_read(adj_weighted_model_summary_sm2_mh)$coefficients["mcs6_sm_per_day"]
+plot_data$coef[15] <- tar_read(adj_weighted_model_summary_sm2_nonmh)$coefficients["mcs6_sm_per_day"]
+plot_data$coef[16] <- tar_read(weighted_model_summary_NCem2)$coefficients["FPEMPN00"]
+plot_data$coef[17] <- tar_read(weighted_model_summary_NCcd2)$coefficients["FCCOPY002"]
+plot_data$coef[18] <- tar_read(weighted_model_summary_NCcd2)$coefficients["FCCOPY003"]
+plot_data$coef[19] <- tar_read(weighted_model_summary_CXsl2)$coefficients["mcs6_sleep"]
+plot_data$coef[20] <- tar_read(weighted_model_summary_CXex2)$coefficients["FCPHEX00"]
+plot_data$coef[21] <- tar_read(weighted_model_summary_CXsi2)$coefficients["mcs6_social_interaction"]
+plot_data$coef[22] <- tar_read(weighted_model_summary_PCtd2)$coefficients["FEBDTOT"]
 
 plot_data$var[1] <- tar_read(weighted_model_summary_sm1)$variance["ECQ09X00", "ECQ09X00"]
-plot_data$var[2] <- tar_read(weighted_model_summary_NCem1)$variance["EPEMPN00", "EPEMPN00"]
-plot_data$var[3] <- tar_read(weighted_model_summary_NCcd1)$variance["ECQ52X002", "ECQ52X002"]
-plot_data$var[4] <- tar_read(weighted_model_summary_NCcd1)$variance["ECQ52X003", "ECQ52X003"]
-plot_data$var[5] <- tar_read(weighted_model_summary_CXsl1)$variance["EPBERE001", "EPBERE001"]
-plot_data$var[6] <- tar_read(weighted_model_summary_CXex1)$variance["mcs5_exercise", "mcs5_exercise"]
-plot_data$var[7] <- tar_read(weighted_model_summary_CXsi1)$variance["mcs5_social_interaction", "mcs5_social_interaction"]
-plot_data$var[8] <- tar_read(weighted_model_summary_PCtd1)$variance["EEBDTO_T", "EEBDTO_T"]
-plot_data$var[9] <- tar_read(weighted_model_summary_sm2)$variance["mcs6_sm_per_day", "mcs6_sm_per_day"]
-plot_data$var[10] <- tar_read(weighted_model_summary_NCem2)$variance["FPEMPN00", "FPEMPN00"]
-plot_data$var[11] <- tar_read(weighted_model_summary_NCcd2)$variance["FCCOPY002", "FCCOPY002"]
-plot_data$var[12] <- tar_read(weighted_model_summary_NCcd2)$variance["FCCOPY003", "FCCOPY003"]
-plot_data$var[13] <- tar_read(weighted_model_summary_CXsl2)$variance["mcs6_sleep", "mcs6_sleep"]
-plot_data$var[14] <- tar_read(weighted_model_summary_CXex2)$variance["FCPHEX00", "FCPHEX00"]
-plot_data$var[15] <- tar_read(weighted_model_summary_CXsi2)$variance["mcs6_social_interaction", "mcs6_social_interaction"]
-plot_data$var[16] <- tar_read(weighted_model_summary_PCtd2)$variance["FEBDTOT", "FEBDTOT"]
+plot_data$var[2] <- tar_read(adj_weighted_model_summary_sm1_none)$variance["ECQ09X00", "ECQ09X00"]
+plot_data$var[3] <- tar_read(adj_weighted_model_summary_sm1_mh)$variance["ECQ09X00", "ECQ09X00"]
+plot_data$var[4] <- tar_read(adj_weighted_model_summary_sm1_nonmh)$variance["ECQ09X00", "ECQ09X00"]
+plot_data$var[5] <- tar_read(weighted_model_summary_NCem1)$variance["EPEMPN00", "EPEMPN00"]
+plot_data$var[6] <- tar_read(weighted_model_summary_NCcd1)$variance["ECQ52X002", "ECQ52X002"]
+plot_data$var[7] <- tar_read(weighted_model_summary_NCcd1)$variance["ECQ52X003", "ECQ52X003"]
+plot_data$var[8] <- tar_read(weighted_model_summary_CXsl1)$variance["EPBERE001", "EPBERE001"]
+plot_data$var[9] <- tar_read(weighted_model_summary_CXex1)$variance["mcs5_exercise", "mcs5_exercise"]
+plot_data$var[10] <- tar_read(weighted_model_summary_CXsi1)$variance["mcs5_social_interaction", "mcs5_social_interaction"]
+plot_data$var[11] <- tar_read(weighted_model_summary_PCtd1)$variance["EEBDTO_T", "EEBDTO_T"]
+plot_data$var[12] <- tar_read(weighted_model_summary_sm2)$variance["mcs6_sm_per_day", "mcs6_sm_per_day"]
+plot_data$var[13] <- tar_read(adj_weighted_model_summary_sm2_none)$variance["mcs6_sm_per_day", "mcs6_sm_per_day"]
+plot_data$var[14] <- tar_read(adj_weighted_model_summary_sm2_mh)$variance["mcs6_sm_per_day", "mcs6_sm_per_day"]
+plot_data$var[15] <- tar_read(adj_weighted_model_summary_sm2_nonmh)$variance["mcs6_sm_per_day", "mcs6_sm_per_day"]
+plot_data$var[16] <- tar_read(weighted_model_summary_NCem2)$variance["FPEMPN00", "FPEMPN00"]
+plot_data$var[17] <- tar_read(weighted_model_summary_NCcd2)$variance["FCCOPY002", "FCCOPY002"]
+plot_data$var[18] <- tar_read(weighted_model_summary_NCcd2)$variance["FCCOPY003", "FCCOPY003"]
+plot_data$var[19] <- tar_read(weighted_model_summary_CXsl2)$variance["mcs6_sleep", "mcs6_sleep"]
+plot_data$var[20] <- tar_read(weighted_model_summary_CXex2)$variance["FCPHEX00", "FCPHEX00"]
+plot_data$var[21] <- tar_read(weighted_model_summary_CXsi2)$variance["mcs6_social_interaction", "mcs6_social_interaction"]
+plot_data$var[22] <- tar_read(weighted_model_summary_PCtd2)$variance["FEBDTOT", "FEBDTOT"]
 
 plot_data$df[1] <- tar_read(weighted_model_summary_sm1)$df["ECQ09X00"]
-plot_data$df[2] <- tar_read(weighted_model_summary_NCem1)$df["EPEMPN00"]
-plot_data$df[3] <- tar_read(weighted_model_summary_NCcd1)$df["ECQ52X002"]
-plot_data$df[4] <- tar_read(weighted_model_summary_NCcd1)$df["ECQ52X003"]
-plot_data$df[5] <- tar_read(weighted_model_summary_CXsl1)$df["EPBERE001"]
-plot_data$df[6] <- tar_read(weighted_model_summary_CXex1)$df["mcs5_exercise"]
-plot_data$df[7] <- tar_read(weighted_model_summary_CXsi1)$df["mcs5_social_interaction"]
-plot_data$df[8] <- tar_read(weighted_model_summary_PCtd1)$df["EEBDTO_T"]
-plot_data$df[9] <- tar_read(weighted_model_summary_sm2)$df["mcs6_sm_per_day"]
-plot_data$df[10] <- tar_read(weighted_model_summary_NCem2)$df["FPEMPN00"]
-plot_data$df[11] <- tar_read(weighted_model_summary_NCcd2)$df["FCCOPY002"]
-plot_data$df[12] <- tar_read(weighted_model_summary_NCcd2)$df["FCCOPY003"]
-plot_data$df[13] <- tar_read(weighted_model_summary_CXsl2)$df["mcs6_sleep"]
-plot_data$df[14] <- tar_read(weighted_model_summary_CXex2)$df["FCPHEX00"]
-plot_data$df[15] <- tar_read(weighted_model_summary_CXsi2)$df["mcs6_social_interaction"]
-plot_data$df[16] <- tar_read(weighted_model_summary_PCtd2)$df["FEBDTOT"]
+plot_data$df[2] <- tar_read(adj_weighted_model_summary_sm1_none)$df["ECQ09X00"]
+plot_data$df[3] <- tar_read(adj_weighted_model_summary_sm1_mh)$df["ECQ09X00"]
+plot_data$df[4] <- tar_read(adj_weighted_model_summary_sm1_nonmh)$df["ECQ09X00"]
+plot_data$df[5] <- tar_read(weighted_model_summary_NCem1)$df["EPEMPN00"]
+plot_data$df[6] <- tar_read(weighted_model_summary_NCcd1)$df["ECQ52X002"]
+plot_data$df[7] <- tar_read(weighted_model_summary_NCcd1)$df["ECQ52X003"]
+plot_data$df[8] <- tar_read(weighted_model_summary_CXsl1)$df["EPBERE001"]
+plot_data$df[9] <- tar_read(weighted_model_summary_CXex1)$df["mcs5_exercise"]
+plot_data$df[10] <- tar_read(weighted_model_summary_CXsi1)$df["mcs5_social_interaction"]
+plot_data$df[11] <- tar_read(weighted_model_summary_PCtd1)$df["EEBDTO_T"]
+plot_data$df[12] <- tar_read(weighted_model_summary_sm2)$df["mcs6_sm_per_day"]
+plot_data$df[13] <- tar_read(adj_weighted_model_summary_sm2_none)$df["mcs6_sm_per_day"]
+plot_data$df[14] <- tar_read(adj_weighted_model_summary_sm2_mh)$df["mcs6_sm_per_day"]
+plot_data$df[15] <- tar_read(adj_weighted_model_summary_sm2_nonmh)$df["mcs6_sm_per_day"]
+plot_data$df[16] <- tar_read(weighted_model_summary_NCem2)$df["FPEMPN00"]
+plot_data$df[17] <- tar_read(weighted_model_summary_NCcd2)$df["FCCOPY002"]
+plot_data$df[18] <- tar_read(weighted_model_summary_NCcd2)$df["FCCOPY003"]
+plot_data$df[19] <- tar_read(weighted_model_summary_CXsl2)$df["mcs6_sleep"]
+plot_data$df[20] <- tar_read(weighted_model_summary_CXex2)$df["FCPHEX00"]
+plot_data$df[21] <- tar_read(weighted_model_summary_CXsi2)$df["mcs6_social_interaction"]
+plot_data$df[22] <- tar_read(weighted_model_summary_PCtd2)$df["FEBDTOT"]
 
-plot_data$term <- factor(plot_data$term, levels = rev(plot_data$term[1:8]))
+plot_data$term <- factor(plot_data$term, levels = rev(plot_data$term[1:11]))
 
 ggplot(plot_data[plot_data$period == 1,], aes(x = exp(coef), xmin = exp(coef - qt(0.975, df)*sqrt(var)), xmax = exp(coef + qt(0.975, df)*sqrt(var)), y = term, fill = Type, colour = Type)) +
   geom_pointrange() +

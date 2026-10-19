@@ -10,6 +10,7 @@ library(labelled)
 library(lavaan)
 library(lubridate)
 library(mice)
+library(mitml)
 library(mitools)
 library(parallel)
 library(purrr)
@@ -231,6 +232,16 @@ list(
       select(MCSID, CNUM, HES_date1, HES_ei1, HES_date2, HES_ei2)
   ),
   
+  # Derive sets of psychiatric diagnosis codes for each participant (for descriptive use only)
+  tar_target(
+    HES_diagnoses,
+    full_join(HES_APC_dates, HES_OP_dates, by = c("MCSID", "CNUM")) %>%
+      rowwise() %>%
+      mutate(HES_diagnoses1 = list(unique(na.omit(unlist(c(APC_diagnoses1, OP_diagnoses1))))),
+             HES_diagnoses2 = list(unique(na.omit(unlist(c(APC_diagnoses2, OP_diagnoses2)))))) %>%
+      select(MCSID, CNUM, HES_diagnoses1, HES_diagnoses2)
+  ),
+  
   # Clean time use diary to produce derived social media use time variable
   tar_target(
     tud_clean,
@@ -341,7 +352,7 @@ list(
   # Produce a dataset for descriptive analysis
   tar_target(
     descriptive_dataset,
-    data_recoded %>% select(MCSID, CNUM, DAREGN00, EAREGN00, ECQ09X00, mcs6_sm_per_day, HES_ei1, HES_ei2, CONSENT, AHCSEX00, DDC06E00, DDOEDE00, EOEDE000, mcs5_wealth)
+    data_recoded %>% select(MCSID, CNUM, DAREGN00, EAREGN00, ECQ09X00, mcs6_sm_per_day, HES_ei1, HES_ei2, CONSENT, AHCSEX00, DDC06E00, DDOEDE00, EOEDE000, mcs5_wealth) %>% full_join(HES_diagnoses, by = c("MCSID", "CNUM"))
   ),
   
   # Create dataset for calculating weights by removing unnecessary variables
@@ -429,6 +440,12 @@ list(
     tar_target(
       weighted_model_summary,
       MIcombine(weighted_models)
+    ),
+    
+    # Fit weighted null models for model comparisons
+    tar_target(
+      null_weighted_models,
+      weighted_coxph(data_imputed_standardised, str_replace(modelformula, "~ .*? \\+", "~"))
     ),
     
     # Multiple imputation for sensitivity analyses

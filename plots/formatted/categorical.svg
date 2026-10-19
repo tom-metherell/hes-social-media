@@ -26,16 +26,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="pt"
-     inkscape:zoom="0.82388592"
-     inkscape:cx="274.30982"
-     inkscape:cy="147.47187"
-     inkscape:window-width="1512"
-     inkscape:window-height="840"
-     inkscape:window-x="0"
+     inkscape:zoom="0.73156721"
+     inkscape:cx="344.46596"
+     inkscape:cy="239.89594"
+     inkscape:window-width="1104"
+     inkscape:window-height="836"
+     inkscape:window-x="7"
      inkscape:window-y="38"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="g41"
-     inkscape:export-bgcolor="#ffffffff" />
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g40" />
   <g
      class="svglite"
      id="g41">
@@ -60,28 +59,6 @@
     }
   ]]></style>
     </defs>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.99998px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5"
-       x="252.34"
-       y="16.440001"
-       id="text43"><tspan
-         sodipodi:role="line"
-         id="tspan43"
-         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold Italic';stroke-width:1.5"
-         x="252.34"
-         y="16.440001">Period 1 (age 11–14)</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.99998px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5"
-       x="252.34"
-       y="174.17999"
-       id="text42"><tspan
-         sodipodi:role="line"
-         id="tspan42"
-         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold Italic';stroke-width:1.5"
-         x="252.34"
-         y="174.17999">Period 2 (age 14–17)</tspan></text>
     <rect
        width="100%"
        height="100%"
@@ -194,6 +171,34 @@
          y2="21.66"
          style="stroke-width: 1.07; stroke-dasharray: 1.42,4.27; stroke-linecap: butt;"
          id="line15" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.439191;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect46-2"
+         width="111.45"
+         height="21.273232"
+         x="334.66245"
+         y="111.00339" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.439191;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect46-2-0"
+         width="111.45"
+         height="21.273232"
+         x="334.66245"
+         y="49.153381" />
+      <text
+         x="344.30"
+         y="62.44"
+         style="font-size: 10.24px; font-family: &quot;Arial&quot;;"
+         textLength="92.12px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text15">0.749 (0.327, 1.714)</text>
+      <text
+         x="344.30"
+         y="124.29"
+         style="font-size: 10.24px; font-family: &quot;Arial&quot;;"
+         textLength="92.12px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text16">0.885 (0.319, 2.454)</text>
     </g>
     <g
        clip-path="url(#cpMC4wMHw0NTEuMjh8MC4wMHwyODMuNDY=)"
@@ -273,28 +278,21 @@
          y2="179.41"
          style="stroke-width: 1.07; stroke-dasharray: 1.42,4.27; stroke-linecap: butt;"
          id="line27" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.439191;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect46"
+         width="111.45"
+         height="21.273232"
+         x="334.66495"
+         y="206.89337" />
+      <text
+         x="344.30"
+         y="220.18"
+         style="font-size: 10.24px; font-family: &quot;Arial&quot;;"
+         textLength="92.12px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text27">3.462 (1.518, 7.897)</text>
     </g>
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.439191"
-       id="rect46"
-       width="111.45"
-       height="21.273232"
-       x="334.66245"
-       y="49.215492" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.439191;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-       id="rect46-1"
-       width="111.45"
-       height="21.273232"
-       x="334.66245"
-       y="111.0655" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.439191;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-       id="rect46-1-2"
-       width="111.45"
-       height="21.273232"
-       x="334.66495"
-       y="206.95549" />
     <g
        clip-path="url(#cpMC4wMHw0NTEuMjh8MC4wMHwyODMuNDY=)"
        id="g28" />
@@ -311,6 +309,17 @@
       </clipPath>
     </defs>
     <g
+       clip-path="url(#cpNTguODl8NDQ1LjgwfDE2My4yMnwxNzkuNDE=)"
+       id="g29">
+      <text
+         x="252.34"
+         y="174.18"
+         text-anchor="middle"
+         style="font-size:10px;fill:#1A1A1A;font-family:Arial;-inkscape-font-specification:'Arial Bold Italic';font-weight:bold;font-style:italic;font-stretch:normal;font-variant:normal"
+         lengthAdjust="spacingAndGlyphs"
+         id="text28">Period 2 (age 14–17)</text>
+    </g>
+    <g
        clip-path="url(#cpMC4wMHw0NTEuMjh8MC4wMHwyODMuNDY=)"
        id="g30" />
     <defs
@@ -326,73 +335,19 @@
       </clipPath>
     </defs>
     <g
+       clip-path="url(#cpNTguODl8NDQ1LjgwfDUuNDh8MjEuNjY=)"
+       id="g31">
+      <text
+         x="252.34"
+         y="16.44"
+         text-anchor="middle"
+         style="font-size:10px;fill:#1A1A1A;font-family:Arial;-inkscape-font-specification:'Arial Bold Italic';font-weight:bold;font-style:italic;font-stretch:normal;font-variant:normal"
+         lengthAdjust="spacingAndGlyphs"
+         id="text30">Period 1 (age 11–14)</text>
+    </g>
+    <g
        clip-path="url(#cpMC4wMHw0NTEuMjh8MC4wMHwyODMuNDY=)"
        id="g40">
-      <text
-         x="344.29999"
-         y="220.17999"
-         style="font-size:10px;font-family:Arial"
-         textLength="92.120003"
-         lengthAdjust="spacingAndGlyphs"
-         id="text27">3.462 (1.518, 7.897)</text>
-      <text
-         x="344.29999"
-         y="124.29"
-         style="font-size:10px;font-family:Arial"
-         textLength="92.120003"
-         lengthAdjust="spacingAndGlyphs"
-         id="text16">0.885 (0.319, 2.454)</text>
-      <text
-         x="344.29999"
-         y="62.439999"
-         style="font-size:10px;font-family:Arial"
-         textLength="92.120003"
-         lengthAdjust="spacingAndGlyphs"
-         id="text15">0.749 (0.327, 1.714)</text>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.99998px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5"
-         x="44.345444"
-         y="219.38"
-         id="text46"><tspan
-           sodipodi:role="line"
-           id="tspan46"
-           style="stroke-width:1.5"
-           x="44.345444"
-           y="219.38">None</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.99998px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5"
-         x="35.679405"
-         y="123.49999"
-         id="text45"><tspan
-           sodipodi:role="line"
-           id="tspan45"
-           style="stroke-width:1.5"
-           x="35.679405"
-           y="123.49999">Most days</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.99998px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5"
-         x="43.180496"
-         y="61.639992"
-         id="text44"><tspan
-           sodipodi:role="line"
-           id="tspan44"
-           style="stroke-width:1.5"
-           x="43.180496"
-           y="61.639992">Never</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:9.99998px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:none;stroke:#ffffff;stroke-width:1.5"
-         x="252.34"
-         y="275.88"
-         id="text41"><tspan
-           sodipodi:role="line"
-           id="tspan41"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5"
-           x="252.34"
-           y="275.88">Hazard ratio</tspan></text>
       <text
          x="76.47"
          y="264.29"
@@ -434,14 +389,43 @@
          lengthAdjust="spacingAndGlyphs"
          id="text35">30.0</text>
       <text
-         transform="rotate(-90,93.152219,76.989371)"
+         x="53.95"
+         y="123.50"
+         text-anchor="end"
+         style="font-size:8px;fill:#000000;font-family:'Arial'"
+         textLength="36.47px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text36">Most days</text>
+      <text
+         x="53.95"
+         y="61.64"
+         text-anchor="end"
+         style="font-size:8px;fill:#000000;font-family:'Arial'"
+         textLength="21.36px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text37">Never</text>
+      <text
+         x="53.95"
+         y="219.38"
+         text-anchor="end"
+         style="font-size:8px;fill:#000000;font-family:'Arial'"
+         textLength="19.14px"
+         lengthAdjust="spacingAndGlyphs"
+         id="text38">None</text>
+      <text
+         x="252.34"
+         y="275.88"
          text-anchor="middle"
-         style="font-size:10px;font-family:Arial"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
+         lengthAdjust="spacingAndGlyphs"
+         id="text39">Hazard ratio</text>
+      <text
+         transform="rotate(-90,93.145,80.505)"
+         text-anchor="middle"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
          textLength="28.91"
          lengthAdjust="spacingAndGlyphs"
-         id="text40"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
-           id="tspan47">Usage</tspan></text>
+         id="text40">Usage</text>
     </g>
   </g>
 </svg>
